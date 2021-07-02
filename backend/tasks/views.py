@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics, permissions, viewsets
+from django.shortcuts import get_object_or_404
 
 from .models import Task
 from .serializer import CreateTaskSerializer, PreviewTaskSerializer, DetailTaskSerializer
@@ -34,7 +35,9 @@ class TaskViewSet(viewsets.ViewSet):
         pass
 
     def destroy(self, request, pk=None):
-        pass
+        task = get_object_or_404(Task, id=pk)
+        task.delete()
+        return Response(status=204)
 
 """
 +получить список моих заданий

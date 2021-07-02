@@ -8,5 +8,8 @@ urlpatterns = format_suffix_patterns([
          'post': 'create'}
     )),
 
-    path("task/<int:pk>/", TaskViewSet.as_view({'get': 'retrieve'})),
+    path("task/<int:pk>/", TaskViewSet.as_view(
+        {'get': 'retrieve',
+         'delete': 'destroy'}
+    )),
 ])
