@@ -4,13 +4,16 @@ from users.models import CustomUser
 
 class Task(models.Model):
     """Шаблон задания"""
-    user = models.ForeignKey(CustomUser, verbose_name="Создатель", on_delete=models.SET_NULL, null=True)
+    creator = models.ForeignKey(CustomUser, verbose_name="Создатель", on_delete=models.SET_NULL, null=True)
     title = models.CharField("Название", max_length=128)
     content = models.TextField("Задача")
     grade = models.IntegerField("Максимальная оценка")
     withAnswer = models.BooleanField("Есть ответ", default=False)
     withSelfChecking = models.BooleanField("Самопроверяемый", default=False)
-    option_count = models.IntegerField("Количество вариантов")
+    option_count = models.IntegerField("Количество вариантов", default=0)
+
+    def __str__(self):
+        return 'Задание {}'.format(self.title)
 
     class Meta:
         verbose_name = "Задание"
@@ -19,7 +22,7 @@ class Task(models.Model):
 
 class Variant(models.Model):
     """Вариант задания"""
-    task = models.ForeignKey(Task, verbose_name="Задание", on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, related_name='variants', verbose_name="Задание", on_delete=models.CASCADE)
     number = models.IntegerField("Номер варианта")
     answer = models.CharField("Ответ", max_length=128)
 
@@ -28,9 +31,9 @@ class Variant(models.Model):
         verbose_name_plural = "Варианты задания"
 
 
-class VariantVariable(models.Model):
+class Variable(models.Model):
     """Переменная для варианта"""
-    option = models.ForeignKey(Variant, verbose_name="Вариант", on_delete=models.CASCADE)
+    variant = models.ForeignKey(Variant, related_name='variables', verbose_name="Вариант", on_delete=models.CASCADE)
     variable = models.CharField("Переменная", max_length=32)
     value = models.CharField("Значение", max_length=256)
 

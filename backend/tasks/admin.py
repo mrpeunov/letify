@@ -1,17 +1,27 @@
 from django.contrib import admin
-from .models import Task, Variant, VariantVariable
+from .models import Task, Variant, Variable
+
+
+class VariantInline(admin.TabularInline):
+    model = Variant
+    extra = 3
+
+
+class VariableInline(admin.TabularInline):
+    model = Variable
+    extra = 2
 
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    pass
+    inlines = [VariantInline]
 
 
 @admin.register(Variant)
 class VariantAdmin(admin.ModelAdmin):
-    pass
+    inlines = [VariableInline]
 
 
-@admin.register(VariantVariable)
+@admin.register(Variable)
 class VariantVariableAdmin(admin.ModelAdmin):
     pass
