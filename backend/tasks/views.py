@@ -19,7 +19,7 @@ class TaskViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        task = Task.objects.get(creator=request.user, id=pk)
+        task = get_object_or_404(Task, id=pk, creator=request.user)
         serializer = DetailTaskSerializer(task)
         return Response(serializer.data)
 
@@ -31,8 +31,6 @@ class TaskViewSet(viewsets.ViewSet):
         else:
             return Response({"status": 400})
 
-    def update(self, request, pk=None):
-        pass
 
     def destroy(self, request, pk=None):
         task = get_object_or_404(Task, id=pk)
@@ -43,7 +41,7 @@ class TaskViewSet(viewsets.ViewSet):
 +получить список моих заданий
 +создать задание
 -изменить задание
--удалить задание
++удалить задание
 -добавить вариант в задания
 -изменить вариант задания
 -получить задание с сгенерированным вариантом

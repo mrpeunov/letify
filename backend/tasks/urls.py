@@ -10,6 +10,7 @@ urlpatterns = format_suffix_patterns([
 
     path("task/<int:pk>/", TaskViewSet.as_view(
         {'get': 'retrieve',
-         'delete': 'destroy'}
+         'delete': 'destroy',
+         'put': 'update'}
     )),
 ])
