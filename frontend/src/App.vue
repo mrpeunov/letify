@@ -6,10 +6,10 @@
 import LoginSystem from "@/components/LoginSystem";
 
 export default {
-  name: 'App',
-  components: {
-    LoginSystem,
-  }
+    name: 'App',
+    components: {
+        LoginSystem,
+    }
 }
 </script>
 
