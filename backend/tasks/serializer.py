@@ -3,49 +3,51 @@ from .models import Task, Variant, Variable
 
 
 class VariableSerializer(serializers.ModelSerializer):
-    """
-    Сериалайзер для переменной
-    """
+    """Сериалайзер для переменной"""
+
     class Meta:
         model = Variable
         exclude = ('id', 'variant')
 
 
 class VariantSerializer(serializers.ModelSerializer):
-    """
-    Сериалайзер для варианта задания
-    """
+    """Сериалайзер для варианта задания"""
     variables = VariableSerializer(many=True)
+
+    def create_or_update(self, task, validated_data):
+        """Создание или обнолвение вариантов задания"""
+        if 'variables' in validated_data:
+            variables_data = validated_data.pop('variables')
+            for variable_data in variables_data:
+                variable, _ = Variable.objects.get_or_create(variant=task, variable=variable_data.get("variable"))
+                VariableSerializer().update(variable, variable_data)
+
+        return super(VariantSerializer, self).update(task, validated_data)
 
     class Meta:
         model = Variant
-        exclude = ('id', 'task')
+        exclude = ('task', 'id')
 
 
-class CreateTaskSerializer(serializers.ModelSerializer):
-    """
-    Сериализатор создания задачи
-    """
+class CreateUpdateTaskSerializer(serializers.ModelSerializer):
+    """Сериализатор создания и обновления задачи"""
     variants = VariantSerializer(many=True)
 
     def create(self, validated_data):
-        # из объекта задания достанем  варианты
-        # и создадим объект задания без переменных
-        variants_data = validated_data.pop('variants')
-        task = Task.objects.create(**validated_data)
-
-        for variant_data in variants_data:
-            # из объекта варианта достанем переменные
-            # и создадим объект варианта без переменных
-
-            variables_data = variant_data.pop('variables')
-            variant = Variant.objects.create(task=task, **variant_data)
-
-            for variable_data in variables_data:
-                # создатим объект переменной
-                Variable.objects.create(variant=variant, **variable_data)
-
+        variants_data = validated_data.pop('variants')  # из данных объекта убираются варианты
+        task = super(CreateUpdateTaskSerializer, self).create(validated_data)  # по данным создается задание
+        self.update_variants_for_task(task, variants_data)  # для этого задания обновляются варианты
         return task
+
+    def update(self, task, validated_data):
+        variants_data = validated_data.pop('variants')  # из данных объекта убираются варианты
+        self.update_variants_for_task(task, variants_data)  # для задания обновляются варианты
+        return super(CreateUpdateTaskSerializer, self).update(task, validated_data)  # по данным обнолвяется задание
+
+    def update_variants_for_task(self, task, variants_data):
+        for variant_data in variants_data:
+            variant, _ = Variant.objects.get_or_create(task=task, number=variant_data.get("number"))
+            VariantSerializer().create_or_update(variant, variant_data)
 
     class Meta:
         model = Task
@@ -53,12 +55,10 @@ class CreateTaskSerializer(serializers.ModelSerializer):
 
 
 class PreviewTaskSerializer(serializers.ModelSerializer):
-    """
-    Сериалайзер для задачи без подробностей
-    """
+    """Сериалайзер для задачи без подробностей"""
     class Meta:
         model = Task
-        fields = ('title', 'grade', 'withAnswer')
+        fields = ('id', 'title', 'grade', 'withAnswer')
 
 
 class DetailTaskSerializer(serializers.ModelSerializer):

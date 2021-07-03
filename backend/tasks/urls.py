@@ -1,6 +1,6 @@
 from rest_framework.urlpatterns import format_suffix_patterns
 from django.urls import path
-from .views import TaskViewSet
+from .views import TaskViewSet, RemoveVariant, RemoveVariable
 
 urlpatterns = format_suffix_patterns([
     path("task/", TaskViewSet.as_view(
@@ -11,6 +11,14 @@ urlpatterns = format_suffix_patterns([
     path("task/<int:pk>/", TaskViewSet.as_view(
         {'get': 'retrieve',
          'delete': 'destroy',
-         'put': 'update'}
+         'patch': 'partial_update'}
+    )),
+
+    path("task/<int:pk>/variant/<int:variant>/", RemoveVariant.as_view(
+        {'delete': 'destroy'}
+    )),
+
+    path("task/<int:pk>/variable/<str:variable>/", RemoveVariable.as_view(
+        {'delete': 'destroy'}
     )),
 ])
