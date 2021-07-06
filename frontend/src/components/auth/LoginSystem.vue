@@ -7,7 +7,7 @@
                 <h1>Добро пожаловать!</h1>
                 <form>
                     <div class="login_input_wrap">
-                        <div class="login_input_title">Логин</div>
+                        <div class="login_input_title">Логин или e-mail</div>
                         <input
                             v-model="loginOrMail"
                             type="text" class="login_input" id="login" placeholder="username">
@@ -22,9 +22,9 @@
                         <label for="password" class="status status_show"></label>
                         <div class="login_input_status">минимум 8 символов: цифры и буквы, на латинице и строчные</div>
                     </div>
-                    <button class="login_button">Зарегистрироваться</button>
+                    <button class="login_button" @click="login">Войти</button>
                 </form>
-                <div class="has_account">Есть аккаунт? <router-link to="login">Войти</router-link></div>
+                <div class="has_account">Нет аккаунта? <router-link :to="{ name: 'signup'}">Зарегистрироваться</router-link></div>
             </div>
         </div>
     </div>
@@ -39,13 +39,9 @@ export default {
             password: ""
         }
     },
-    created() {
-        console.log("fff")
-    },
     methods: {
         login() {
-            console.log("здрасте")
-            this.$router.push({name: "Login"})
+            console.log("Здрасте");
         }
     }
 }

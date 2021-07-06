@@ -1,11 +1,11 @@
 <template>
     <div>
-
+        <router-view/>
     </div>
 </template>
 
 <script>
-import SignUpSystem from "@/components/SignUpSystem";
+import SignUpSystem from "@/components/auth/SignUpSystem";
 
 export default {
     name: 'App',
@@ -15,7 +15,7 @@ export default {
     methods: {
         login() {
             console.log("здрасте")
-            this.$router.push({name: "Login"})
+            this.$router.push({name: "login"})
         }
     }
 }
