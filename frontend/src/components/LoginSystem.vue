@@ -24,7 +24,7 @@
                     </div>
                     <button class="login_button">Зарегистрироваться</button>
                 </form>
-                <div class="has_account">Есть аккаунт? <a href="">Войти</a></div>
+                <div class="has_account">Есть аккаунт? <router-link to="login">Войти</router-link></div>
             </div>
         </div>
     </div>
@@ -32,16 +32,20 @@
 
 <script>
 export default {
-    name: "SignUpSystem",
+    name: "LoginSystem",
     data(){
         return {
             loginOrMail: "",
             password: ""
         }
     },
+    created() {
+        console.log("fff")
+    },
     methods: {
-        logIn(){
-
+        login() {
+            console.log("здрасте")
+            this.$router.push({name: "Login"})
         }
     }
 }

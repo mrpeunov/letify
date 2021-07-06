@@ -32,7 +32,7 @@
                     </div>
                     <button class="login_button">Зарегистрироваться</button>
                 </form>
-                <div class="has_account">Есть аккаунт? <a href="">Войти</a></div>
+                <div class="has_account">Нет аккаунта? <router-link to="signup">Зарегистрироваться</router-link></div>
             </div>
         </div>
     </div>

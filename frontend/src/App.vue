@@ -1,5 +1,7 @@
 <template>
-    <sign-up-system></sign-up-system>
+    <div>
+
+    </div>
 </template>
 
 <script>
@@ -7,8 +9,14 @@ import SignUpSystem from "@/components/SignUpSystem";
 
 export default {
     name: 'App',
-    components: {
-        SignUpSystem,
+    created() {
+        this.login()
+    },
+    methods: {
+        login() {
+            console.log("здрасте")
+            this.$router.push({name: "Login"})
+        }
     }
 }
 </script>
@@ -126,7 +134,7 @@ h1 {
         cursor: pointer;
         margin-top: 30px;
 
-        &:hover{
+        &:hover {
             background: linear-gradient(270deg, #10D4FF 7.9%, #00FF5B 114.32%);
         }
     }
@@ -147,7 +155,7 @@ h1 {
         }
     }
 
-    &_error{
+    &_error {
         &:after {
             content: '';
             display: block;
@@ -159,8 +167,8 @@ h1 {
         }
     }
 
-    &_show{
-        &:after{
+    &_show {
+        &:after {
             content: '';
             display: block;
             height: 20px;
@@ -171,8 +179,8 @@ h1 {
         }
     }
 
-    &_hide{
-        &:after{
+    &_hide {
+        &:after {
             content: '';
             display: block;
             height: 20px;
@@ -185,3 +193,4 @@ h1 {
     }
 }
 </style>
+
