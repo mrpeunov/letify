@@ -9,10 +9,18 @@
                     <div class="login_input_wrap">
                         <div class="login_input_title">Логин</div>
                         <input
-                            v-model="loginOrMail"
+                            v-model="login"
                             type="text" class="login_input" id="login" placeholder="username">
                         <label for="login" class="status status_error"></label>
                         <div class="login_input_status"></div>
+                    </div>
+                    <div class="login_input_wrap">
+                        <div class="login_input_title">E-mail</div>
+                        <input
+                            v-model="mail"
+                            type="text" id="email" class="login_input" placeholder="name@mail.ru">
+                        <label for="email" class="status status_ok"></label>
+                        <div class="login_input_status">аккаунт на указанный адрес уже зарегистрирован</div>
                     </div>
                     <div class="login_input_wrap">
                         <div class="login_input_title">Password</div>
@@ -35,12 +43,13 @@ export default {
     name: "SignUpSystem",
     data(){
         return {
-            loginOrMail: "",
+            login: "",
+            mail: "",
             password: ""
         }
     },
     methods: {
-        logIn(){
+        signUp(){
 
         }
     }
@@ -48,8 +57,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
-
-
 
 </style>
