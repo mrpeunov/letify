@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        Хто тут главный
     </div>
 </template>
 

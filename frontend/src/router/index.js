@@ -18,7 +18,7 @@ const routes = [
         path: '/signup/',
         name: 'signup',
         component: SignUpSystem
-    }
+    },
 ]
 
 const router = createRouter({

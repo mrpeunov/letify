@@ -1,8 +1,9 @@
 import axios from "axios";
 
-export const login = (password, loginOrEmail, callback) => {
-    const token = getToken(password, loginOrEmail, addTokenInLocalStorage);
-    //исправить
+axios.defaults.baseURL = 'http://127.0.0.1:8000/';
+
+export const loginInSystem = (loginOrEmail, password) => {
+    getToken(password, loginOrEmail);
     /*
     * Логика такая:
     * 1. Получаем токен
@@ -12,22 +13,23 @@ export const login = (password, loginOrEmail, callback) => {
     * */
 }
 
-const getToken = (password, loginOrEmail, callback) => {
+const getToken = (password, loginOrEmail) => {
     const request = {
-        method: 'GET',
-        url: '',
-        params: {
-            password: password,
-            loginOrEmail: loginOrEmail
+        method: 'post',
+        url: '/auth/token/login/',
+        data: {
+            username: loginOrEmail,
+            password: password
         }
     }
 
     axios(request).then(function (response) {
-        callback(response.data);
-    });
+        addTokenInLocalStorage(response.data.auth_token)
+    })
 }
 
 const addTokenInLocalStorage = (token) => {
-    localStorage.setItem('auth_token', token)
+    localStorage.setItem('auth_token', token);
+    axios.defaults.headers.common['Authorization'] = 'Token ' + token;
 }
 

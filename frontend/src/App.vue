@@ -10,12 +10,24 @@ import SignUpSystem from "@/components/auth/SignUpSystem";
 export default {
     name: 'App',
     created() {
-        this.login()
+        if(this.auth) this.goMainPage();
+        else this.login();
+    },
+    computed: {
+        auth: () => {
+            if(localStorage.getItem('auth_token')){
+                return true;
+            } else {
+                return false;
+            }
+        }
     },
     methods: {
         login() {
-            console.log("здрасте")
             this.$router.push({name: "login"})
+        },
+        goMainPage() {
+            this.$router.push({name: "MainPage"})
         }
     }
 }

@@ -5,7 +5,7 @@
             </div>
             <div class="login_form">
                 <h1>Добро пожаловать!</h1>
-                <form>
+                <form @submit.prevent="">
                     <div class="login_input_wrap">
                         <div class="login_input_title">Логин или e-mail</div>
                         <input
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import {loginInSystem} from "@/services/auth_api";
+
 export default {
     name: "LoginSystem",
     data(){
@@ -41,7 +43,8 @@ export default {
     },
     methods: {
         login() {
-            console.log("Здрасте");
+            loginInSystem(this.loginOrMail, this.password);
+            this.$router.push({name: "MainPage"})
         }
     }
 }
