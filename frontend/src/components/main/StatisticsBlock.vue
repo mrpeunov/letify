@@ -1,12 +1,12 @@
 <template>
-    <div>
-        Хто тут главный
+    <div class="container">
+        Жопа
     </div>
 </template>
 
 <script>
 export default {
-    name: "MainPage"
+    name: "StatisticsBlock"
 }
 </script>
 

@@ -44,7 +44,13 @@ body {
     margin: 0;
 }
 
-.container {
+.container{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 200px;
+}
+
+.login_container {
     background: #ACECC3;
     width: 100%;
     min-height: 100vh;

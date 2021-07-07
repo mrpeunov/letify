@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import LoginSystem from "@/components/auth/LoginSystem";
 import SignUpSystem from "@/components/auth/SignUpSystem";
-import MainPage from "@/components/MainPage";
+import MainPage from "@/components/main/MainPage";
 
 const routes = [
     {
