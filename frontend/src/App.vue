@@ -34,6 +34,7 @@ export default {
 </script>
 
 <style lang="less">
+
 #app {
     margin: 0;
     padding: 0;
