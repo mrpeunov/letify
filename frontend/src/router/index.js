@@ -4,6 +4,8 @@ import MainPage from "@/components/main/MainPage";
 import AuthBase from "@/components/auth/AuthBase";
 import TasksPage from "@/components/tasks/TasksPage";
 import CompetitionsPage from "@/components/competitions/CompetitionsPage";
+import UserPage from "@/components/user/UserPage";
+
 
 const routes = [
     {
@@ -30,6 +32,11 @@ const routes = [
         path: '/competitions/',
         name: 'competitions',
         component: CompetitionsPage
+    },
+    {
+        path: '/user/',
+        name: 'user',
+        component: UserPage
     },
 ]
 
