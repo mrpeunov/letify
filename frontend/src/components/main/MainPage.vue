@@ -1,8 +1,11 @@
 <template>
     <div>
         <header-menu page-name="main"></header-menu>
-        Главная
-        <statistics-block></statistics-block>
+        <div class="container">
+            ип
+            <statistics-block></statistics-block>
+            пи
+        </div>
     </div>
 </template>
 

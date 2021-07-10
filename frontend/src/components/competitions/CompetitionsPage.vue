@@ -1,6 +1,9 @@
 <template>
     <div>
         <header-menu page-name="competitions"></header-menu>
+        <div class="container">
+            Тут список соревнований
+        </div>
     </div>
 </template>
 

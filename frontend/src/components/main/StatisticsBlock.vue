@@ -1,12 +1,18 @@
 <template>
-    <div class="container">
-       Блок со стратистикой
+    <div>
+        Блок со стратистикой
+        {{time}}
     </div>
 </template>
 
 <script>
 export default {
-    name: "StatisticsBlock"
+    name: "StatisticsBlock",
+    data() {
+        return {
+            time: "4:20"
+        }
+    }
 }
 </script>
 

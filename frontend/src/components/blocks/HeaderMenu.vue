@@ -1,6 +1,7 @@
 <template>
     <div class="menu">
-        <div class="menu_info">
+        <div class="menu_container">
+            <div class="menu_info">
             <div class="menu_logo">
                 <img src="@/assets/img/logo.png" alt="">
             </div>
@@ -19,7 +20,7 @@
                 class="menu_item"
                 :class="{active: isTasks }">Задачи</router-link>
         </div>
-        <div class="menu_lk">
+            <div class="menu_lk">
             <div class="menu_lk_img">ПВ</div>
             <div class="menu_lk_name">
                 Виталий Пеунов
@@ -31,6 +32,7 @@
                 <div class="menu_lk_dropdown_item">Профиль</div>
                 <div class="menu_lk_dropdown_item">Выход</div>
             </div>
+        </div>
         </div>
     </div>
 </template>
@@ -60,11 +62,17 @@ export default {
 .menu {
     background: #F3F3F3;
     width: 100%;
-    height: 80px;
-    padding-left: 200px;
     box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
+
+    &_container{
+        width: 95%;
+        max-width: calc(100% - (100% - 1300px) / 2);
+        margin-left: auto;
+        display: flex;
+        justify-content: space-between;
+        height: 80px;
+
+    }
 
     &_info {
         display: flex;

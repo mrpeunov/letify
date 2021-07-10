@@ -45,9 +45,10 @@ body {
 }
 
 .container{
-    width: 100%;
+    width: 90%;
+    max-width: 1300px;
     box-sizing: border-box;
-    padding: 0 200px;
+    margin: 0 auto;
 }
 
 

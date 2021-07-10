@@ -1,7 +1,9 @@
 <template>
     <div>
         <header-menu page-name="tasks"></header-menu>
-        Тут будут таски
+        <div class="container">
+            Тут будут таски
+        </div>
     </div>
 </template>
 
