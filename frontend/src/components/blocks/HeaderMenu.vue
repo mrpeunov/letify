@@ -1,33 +1,23 @@
 <template>
     <div class="menu">
         <div class="menu_container">
-            <div class="menu_icon">
-                <img src="@/assets/img/menu.png" alt="">
-                <div class="menu_mobile">
 
-                </div>
+            <div class="menu_icon" @click="openMenu">
+                <img src="@/assets/img/menu.png" alt="">
             </div>
 
-            <div class="menu_info">
-                <div class="menu_logo">
+            <div class="menu_wrap">
+                <div class="menu_wrap_logo">
                     <img src="@/assets/img/logo.png" alt="">
                 </div>
-                <div class="menu_links">
-                    <router-link
-                        to="/"
-                        class="menu_item"
-                        :class="{active: isMain}">Главная
-                    </router-link>
 
+                <div class="menu_wrap_links">
                     <router-link
-                        to="/competitions/"
-                        class="menu_item"
-                        :class="{active: isCompetitions}">Создание соревнований
-                    </router-link>
-                    <router-link
-                        to="/tasks/"
-                        class="menu_item"
-                        :class="{active: isTasks }">Задачи
+                        v-for="link in desktopLinks"
+                        class="menu_wrap_links_item"
+                        :key="link.text"
+                        :to="link.href"
+                        :class="{active: isLinkActive(link.name)}">{{ link.text }}
                     </router-link>
                 </div>
             </div>
@@ -35,21 +25,30 @@
             <div class="menu_lk">
                 <div class="menu_lk_user">
                     <div class="menu_lk_img">ПВ</div>
-                    <div class="menu_lk_name">
-                        Виталий Пеунов
-                    </div>
-                    <div class="menu_lk_mark">
-
-                    </div>
+                    <div class="menu_lk_name">Виталий Пеунов</div>
+                    <div class="menu_lk_mark"></div>
                 </div>
+
                 <div class="menu_lk_dropdown">
                     <router-link
-                        to="/user/"
-                        class="menu_lk_dropdown_item">Профиль
+                        v-for="link in userLinks"
+                        class="menu_lk_dropdown_item"
+                        :key="link.text"
+                        :to="link.href">{{ link.text }}
                     </router-link>
-                    <div class="menu_lk_dropdown_item">Выход</div>
+                    <div class="menu_lk_dropdown_item" @click="goOut">Выход</div>
                 </div>
             </div>
+        </div>
+        <div class="menu_mobile" :class="{active: openMobileMenu}">
+            <router-link
+                v-for="link in mobileLinks"
+                class="menu_mobile_item"
+                :key="link.text"
+                :to="link.href"
+                :class="{active: isLinkActive(link.name)}">{{ link.text }}
+            </router-link>
+            <div class="menu_mobile_item" @click="goOut">Выход</div>
         </div>
     </div>
 </template>
@@ -58,25 +57,43 @@
 export default {
     name: "HeaderMenu",
     props: ['pageName'],
-    computed: {
-        isMain() {
-            console.log("Здрасьтке")
-            return this.pageName === "main";
-        },
-        isTasks() {
-            return this.pageName === "tasks";
-        },
-        isCompetitions() {
-            return this.pageName === "competitions";
+    data() {
+        return {
+            desktopLinks: [
+                {href: '/', text: "Главная", name: "main"},
+                {href: '/competitions/', text: "Создание соревнований", name: "competitions"},
+                {href: '/tasks/', text: "Задачи", name: "tasks"},
+            ],
+            userLinks: [
+                {href: '/user/', text: "Профиль", name: "user"}
+            ],
+            openMobileMenu: false
         }
     },
-    methods: {}
+    computed: {
+        mobileLinks() {
+            return this.desktopLinks.concat(this.userLinks);
+        }
+    },
+    methods: {
+        isLinkActive(linkName) {
+            return this.pageName === linkName;
+        },
+        openMenu() {
+            this.openMobileMenu = !this.openMobileMenu;
+        },
+        goOut() {
+            console.log("Вылетаем из системы")
+        }
+    }
 }
 </script>
 
 <style lang="less" scoped>
+@menu-bg: #F3F3F3;
+
 .menu {
-    background: #F3F3F3;
+    background: @menu-bg;
     width: 100%;
     box-sizing: border-box;
 
@@ -88,65 +105,69 @@ export default {
         justify-content: space-between;
         height: 80px;
 
-        @media (max-width: 900px){
+        @media (max-width: 900px) {
             width: 100%;
             padding: 0 10px;
             box-sizing: border-box;
         }
     }
 
-    &_links{
-        display: flex;
-
-        @media (max-width: 900px){
-            display: none;
-        }
-    }
-
-    &_icon{
+    &_icon {
         display: none;
-        width: 25px;
+        width: 30px;
         padding: 10px;
 
-        img{
+        img {
             width: 100%;
         }
 
-        @media (max-width: 900px){
+        @media (max-width: 900px) {
             display: flex;
             align-items: center;
             cursor: pointer;
         }
     }
 
-    &_info {
+    &_wrap {
         display: flex;
-    }
 
-    &_logo {
-        width: 80px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-right: 30px;
+        &_links {
+            display: flex;
 
-        img {
-            width: 100%;
+            &_item {
+                padding: 0 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                text-decoration: none;
+                color: black;
+
+                &.active, &:hover {
+                    font-weight: bold;
+                    color: #71A6FD;
+                }
+            }
+
+            @media (max-width: 900px) {
+                display: none;
+            }
         }
-    }
 
-    &_item {
-        padding: 0 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        text-decoration: none;
-        color: black;
+        &_logo {
+            width: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 30px;
 
-        &.active, &:hover {
-            font-weight: bold;
-            color: #71A6FD;
+            @media (max-width: 900px) {
+                margin: 0;
+            }
+
+            img {
+                width: 100%;
+            }
         }
     }
 
@@ -158,7 +179,7 @@ export default {
         margin-right: 50px;
         cursor: pointer;
 
-        @media (max-width: 900px){
+        @media (max-width: 900px) {
             margin-right: 0;
         }
 
@@ -174,7 +195,7 @@ export default {
             margin-right: 20px;
             background: linear-gradient(226.99deg, #59FF94 -139.65%, #56CAFC 119.66%);
 
-            @media (max-width: 900px){
+            @media (max-width: 900px) {
                 margin-right: 0;
             }
         }
@@ -185,7 +206,7 @@ export default {
             justify-content: center;
             font-weight: 700;
 
-            @media (max-width: 900px){
+            @media (max-width: 900px) {
                 display: none;
             }
         }
@@ -194,7 +215,7 @@ export default {
             display: block;
         }
 
-        &:active  .menu_lk_dropdown {
+        &:active .menu_lk_dropdown {
             display: block;
         }
 
@@ -234,5 +255,31 @@ export default {
             }
         }
     }
+
+    &_mobile {
+        display: none;
+        position: fixed;
+        height: 100vh;
+        width: 100%;
+        background: @menu-bg;
+
+        &.active {
+            display: block;
+        }
+
+        &_item {
+            display: block;
+            text-align: center;
+            margin: 0 auto;
+            padding: 15px;
+            color: black;
+            text-decoration: none;
+
+            &:hover {
+                font-weight: 600;
+            }
+        }
+    }
 }
+
 </style>
