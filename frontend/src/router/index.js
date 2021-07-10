@@ -1,8 +1,9 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import LoginSystem from "@/components/auth/LoginSystem";
-import SignUpSystem from "@/components/auth/SignUpSystem";
+
 import MainPage from "@/components/main/MainPage";
 import AuthBase from "@/components/auth/AuthBase";
+import TasksPage from "@/components/tasks/TasksPage";
+import CompetitionsPage from "@/components/competitions/CompetitionsPage";
 
 const routes = [
     {
@@ -19,6 +20,16 @@ const routes = [
         path: '/signup/',
         name: 'signup',
         component: AuthBase
+    },
+    {
+        path: '/tasks/',
+        name: 'tasks',
+        component: TasksPage
+    },
+    {
+        path: '/competitions/',
+        name: 'competitions',
+        component: CompetitionsPage
     },
 ]
 

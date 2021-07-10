@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        Жопа
+       Блок со стратистикой
     </div>
 </template>
 

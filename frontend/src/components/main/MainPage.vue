@@ -1,13 +1,14 @@
 <template>
     <div>
-        <header-menu></header-menu>
+        <header-menu page-name="main"></header-menu>
+        Главная
         <statistics-block></statistics-block>
     </div>
 </template>
 
 <script>
-import HeaderMenu from "@/components/blocks/HeaderMenu";
 import StatisticsBlock from "@/components/main/StatisticsBlock";
+import HeaderMenu from "@/components/blocks/HeaderMenu";
 
 export default {
     name: "MainPage",

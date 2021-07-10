@@ -4,9 +4,20 @@
             <div class="menu_logo">
                 <img src="@/assets/img/logo.png" alt="">
             </div>
-            <div class="menu_item active">Главная</div>
-            <div class="menu_item">Создание соревнований</div>
-            <div class="menu_item">Задачи</div>
+
+            <router-link
+                to="/"
+                class="menu_item"
+                :class="{active: isMain}">Главная</router-link>
+
+            <router-link
+                to="/competitions/"
+                class="menu_item"
+                :class="{active: isCompetitions}">Создание соревнований</router-link>
+            <router-link
+                to="/tasks/"
+                class="menu_item"
+                :class="{active: isTasks }">Задачи</router-link>
         </div>
         <div class="menu_lk">
             <div class="menu_lk_img">ПВ</div>
@@ -26,7 +37,22 @@
 
 <script>
 export default {
-    name: "HeaderMenu"
+    name: "HeaderMenu",
+    props: ['pageName'],
+    computed: {
+        isMain () {
+            console.log("Здрасьтке")
+            return this.pageName === "main";
+        },
+        isTasks () {
+            return this.pageName === "tasks";
+        },
+        isCompetitions () {
+            return this.pageName === "competitions";
+        }
+    },
+    methods: {
+    }
 }
 </script>
 
@@ -62,6 +88,8 @@ export default {
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        text-decoration: none;
+        color: black;
 
         &.active, &:hover{
             font-weight: bold;
