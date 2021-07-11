@@ -238,7 +238,7 @@ export default {
             padding: 0 10px;
             box-sizing: border-box;
             z-index: 10;
-            
+
             &_item {
                 padding: 15px;
                 border-bottom: 2px solid #71A6FD;

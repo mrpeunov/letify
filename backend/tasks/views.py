@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework import generics, permissions, viewsets
 from django.shortcuts import get_object_or_404
 
-from .models import Task, Variant, Variable
-from .serializer import CreateUpdateTaskSerializer, PreviewTaskSerializer, DetailTaskSerializer
+from .models import Task, Variant, Variable, Category
+from .serializer import CreateUpdateTaskSerializer, PreviewTaskSerializer, DetailTaskSerializer, CategorySerializer
 
 
 class TaskViewSet(viewsets.ViewSet):
@@ -15,9 +15,14 @@ class TaskViewSet(viewsets.ViewSet):
     # permission_classes = [permissions.IsAuthenticated, ]
 
     def list(self, request):
+        """
         tasks = Task.objects.filter(creator=request.user)
         serializer = PreviewTaskSerializer(tasks, many=True)
+        """
+        categories = Category.objects.filter(creator=request.user)
+        serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
+
 
     def retrieve(self, request, pk=None):
         task, created = get_object_or_404(Task, id=pk, creator=request.user)

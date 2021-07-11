@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Task, Variant, Variable
+from .models import Task, Variant, Variable, Category
 
 
 class VariantInline(admin.TabularInline):
@@ -24,4 +24,9 @@ class VariantAdmin(admin.ModelAdmin):
 
 @admin.register(Variable)
 class VariantVariableAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
     pass

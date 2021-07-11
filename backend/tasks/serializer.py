@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Task, Variant, Variable
+from .models import Task, Variant, Variable, Category
 
 
 class VariableSerializer(serializers.ModelSerializer):
@@ -54,13 +54,6 @@ class CreateUpdateTaskSerializer(serializers.ModelSerializer):
         fields = ('title', 'grade', 'content', 'variants')
 
 
-class PreviewTaskSerializer(serializers.ModelSerializer):
-    """Сериалайзер для задачи без подробностей"""
-    class Meta:
-        model = Task
-        fields = ('id', 'title', 'grade', 'withAnswer')
-
-
 class DetailTaskSerializer(serializers.ModelSerializer):
     """
     Подробный сериализатор задачи
@@ -70,3 +63,18 @@ class DetailTaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
+
+
+class PreviewTaskSerializer(serializers.ModelSerializer):
+    """Сериалайзер для задачи без подробностей"""
+    class Meta:
+        model = Task
+        fields = ('id', 'title', 'grade', 'withAnswer')
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    tasks = PreviewTaskSerializer(many=True)
+
+    class Meta:
+        model = Category
+        fields = ('id', 'title', 'tasks')
