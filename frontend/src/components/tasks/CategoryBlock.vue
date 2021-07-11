@@ -1,44 +1,47 @@
 <template>
     <div class="category" :class="{active: isOpen}">
+
         <div class="category_header" @click="toggleCategory">
             {{ title }}
         </div>
         <div class="category_items">
-            <div
-                v-for="task in tasks"
-                :key="task.id"
-                class="task">
-                <div class="task_title">{{ task.title }}</div>
-                <div class="task_grade">Максильная оценка: {{ task.grade }} баллов</div>
+            <task-block v-for="task in tasks" :key="task.id" v-bind="task"></task-block>
+            <div class="add_task" @click="add_task">
+                <div class="add_task_blur">
+                    <div class="add_task_plus">+</div>
+                </div>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
+import TaskBlock from "@/components/tasks/TaskBlock";
+
 export default {
     name: "CategoryBlock",
-    props: ['title'],
+    components: {
+        TaskBlock
+    },
+    props: {
+        title: String,
+        tasks: Array
+    },
+    created() {
+        console.log(this.title, this.tasks)
+    },
     data() {
         return {
             isOpen: true,
             isActive: true,
-            tasks: [
-                {id: 1, title: "Сколько фруктов?", grade: 5},
-                {id: 2, title: "Сколько денег?", grade: 4},
-                {id: 3, title: "Сколько лет?", grade: 4},
-                {id: 4, title: "Какие планы на лето?", grade: 4},
-                {id: 5, title: "Почем айфон брал?", grade: 4},
-                {id: 6, title: "C++ или Python?", grade: 4},
-                {id: 7, title: "ЛЭТИ или сиди?", grade: 4}
-            ],
         }
     },
     methods: {
         toggleCategory() {
-            console.log("Категория")
             this.isOpen = !this.isOpen;
+        },
+        addTask(){
+
         }
     }
 }
@@ -62,6 +65,7 @@ export default {
         position: relative;
         cursor: pointer;
         user-select: none;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
 
         &:after {
             content: "";
@@ -90,32 +94,38 @@ export default {
     }
 }
 
-.task {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 150px;
+.add_task{
+    background: linear-gradient(266.75deg, #FFC54C -58.51%, #FF7FD5 53.28%);
     border-radius: 15px;
-    padding: 15px;
-    background: linear-gradient(266deg, #FF2CDF -49.33%, #71A6FD 113.86%);
-    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.25);
-    color: white;
-    cursor: pointer;
 
-    &:hover {
-        background: linear-gradient(200deg, #71A6FD 113.86%, #FF2CDF -49.33%);
+    &:hover{
+        background: linear-gradient(266.75deg, #FF7FD5 53.28%, #FFC54C -58.51%);
     }
 
-
-    &_title {
-        font-size: 20px;
-        font-weight: 700;
+    &_blur{
+        height: 100%;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(4px);
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.25);
     }
 
-    &_grade {
-        font-size: 14px;
-        font-weight: 400;
+    &_plus{
+        font-size: 50px;
+        border-radius: 50%;
+        border: 3px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @size: 50px;
+        width: @size;
+        height: @size;
+        user-select: none;
+        cursor: pointer;
+        font-weight: 300;
     }
 }
-
 </style>
