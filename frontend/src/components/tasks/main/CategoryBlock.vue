@@ -6,7 +6,7 @@
         </div>
         <div class="category_items">
             <task-block v-for="task in tasks" :key="task.id" v-bind="task"></task-block>
-            <div class="add_task" @click="add_task">
+            <div class="add_task" @click="addTask">
                 <div class="add_task_blur">
                     <div class="add_task_plus">+</div>
                 </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import TaskBlock from "@/components/tasks/TaskBlock";
+import TaskBlock from "@/components/tasks/main/TaskBlock";
 
 export default {
     name: "CategoryBlock",
@@ -24,6 +24,7 @@ export default {
         TaskBlock
     },
     props: {
+        id: Number,
         title: String,
         tasks: Array
     },
@@ -41,7 +42,10 @@ export default {
             this.isOpen = !this.isOpen;
         },
         addTask(){
-
+            this.$router.push({
+                name: 'task-add',
+                params: { category: this.id }
+            })
         }
     }
 }

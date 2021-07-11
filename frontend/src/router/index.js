@@ -2,9 +2,10 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 import MainPage from "@/components/main/MainPage";
 import AuthBase from "@/components/auth/AuthBase";
-import TasksPage from "@/components/tasks/TasksPage";
+import TasksPage from "@/components/tasks/main/TasksPage";
 import CompetitionsPage from "@/components/competitions/CompetitionsPage";
 import UserPage from "@/components/user/UserPage";
+import AddTaskPage from "@/components/tasks/add/AddTaskPage";
 
 
 const routes = [
@@ -38,6 +39,11 @@ const routes = [
         name: 'user',
         component: UserPage
     },
+    {
+        path: '/tasks/add/',
+        name: 'task-add',
+        component: AddTaskPage
+    }
 ]
 
 const router = createRouter({

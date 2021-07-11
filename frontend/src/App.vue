@@ -10,12 +10,12 @@ import SignUpSystem from "@/components/auth/SignUpSystem";
 export default {
     name: 'App',
     created() {
-        if(this.auth) this.goMainPage();
+        if (this.auth) this.goMainPage();
         else this.login();
     },
     computed: {
         auth: () => {
-            if(localStorage.getItem('auth_token')){
+            if (localStorage.getItem('auth_token')) {
                 return true;
             } else {
                 return false;
@@ -45,11 +45,18 @@ body {
     margin: 0;
 }
 
-.container{
+.container {
     width: 90%;
     max-width: 1300px;
     box-sizing: border-box;
     margin: 0 auto;
+}
+
+.standard {
+    &_h1 {
+        font-size: 20px;
+
+    }
 }
 
 

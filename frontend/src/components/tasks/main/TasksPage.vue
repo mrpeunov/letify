@@ -1,11 +1,12 @@
 <template>
     <div>
-        <header-menu page-name="tasks"></header-menu>
+        <header-menu page-name="add_task"></header-menu>
         <div class="container" >
-            <h1>Созданные задачи</h1>
+            <h1 class="standard_h1">Созданные задачи</h1>
             <div class="categories">
                 <category-block
                     v-for="category in categories"
+                    :id="category.id"
                     :title="category.title"
                     :tasks="category.tasks"
                     :key="category.title">
@@ -17,7 +18,7 @@
 
 <script>
 import HeaderMenu from "@/components/blocks/HeaderMenu";
-import CategoryBlock from "@/components/tasks/CategoryBlock";
+import CategoryBlock from "@/components/tasks/main/CategoryBlock";
 import {getCategoriesWithTasks} from "@/services/tasks_api";
 
 export default {
@@ -45,7 +46,5 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-    font-size: 20px;
-}
+
 </style>
