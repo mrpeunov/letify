@@ -3,11 +3,18 @@
         <input
             v-model="variable"
             @click="addVariableInText"
+            ref="input"
             type="text"
-            :readonly=edit>
-        <div class="remove" @click="remove">
-            <img src="@/assets/img/remove.png" alt="">
+            :readonly=readonly>
+        <div class="variable_functions">
+            <div class="variable_functions_icon" @click="startEdit">
+                <img src="@/assets/img/edit.png" alt="">
+            </div>
+            <div class="variable_functions_icon" @click="remove">
+                <img src="@/assets/img/remove.png" alt="">
+            </div>
         </div>
+
     </div>
 
 </template>
@@ -26,18 +33,20 @@ export default {
     data() {
         return {
             title: '',
-            edit: true
+            readonly: true
         }
     },
     methods: {
         startEdit() {
-            this.edit = !this.edit
+            this.readonly = !this.readonly
+            this.$refs.input.focus();
+            this.$refs.input.select()
         },
         remove(){
             this.$emit('remove')
         },
         addVariableInText(){
-            this.$emit('addInTask')
+            if(this.readonly) this.$emit('addInTask')
         }
     }
 }
@@ -45,27 +54,26 @@ export default {
 
 <style lang="less" scoped>
 .variable {
-    position: relative;
-    background: white;
-    margin: 10px;
-    padding: 10px;
-    text-align: center;
-    border-radius: 10px;
-    user-select: none;
-    font-weight: 700;
     display: flex;
-    cursor: pointer;
 
     input {
         border: none;
         text-align: center;
         outline: none;
-        user-select: none;
         cursor: pointer;
         width: 90%;
         color: #71A6FD;
         font-weight: 700;
-        font-size: 18px;
+        font-size: 16px;
+    }
+
+    &_functions{
+        &_icon{
+            img{
+                width: 20px;
+                height: 20px;
+            }
+        }
     }
 
     .remove{

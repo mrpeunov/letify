@@ -1,6 +1,6 @@
 <template>
     <div class="workspace">
-        <textarea v-model="text"></textarea>
+        <textarea v-model="text" ></textarea>
     </div>
 </template>
 
