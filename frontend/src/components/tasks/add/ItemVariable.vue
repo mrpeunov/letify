@@ -1,17 +1,18 @@
 <template>
     <div class="variable">
         <input
-            v-model="variable"
+            v-model="title"
             @click="addVariableInText"
+            @keyup.enter="changeVariableName"
             ref="input"
             type="text"
             :readonly=readonly>
         <div class="variable_functions">
             <div class="variable_functions_icon" @click="startEdit">
-                <img src="@/assets/img/edit.png" alt="">
+                <img src="@/assets/img/edit.svg" alt="">
             </div>
-            <div class="variable_functions_icon" @click="remove">
-                <img src="@/assets/img/remove.png" alt="">
+            <div class="variable_functions_icon" @click="$emit('remove')">
+                <img src="@/assets/img/basket.svg" alt="">
             </div>
         </div>
 
@@ -22,13 +23,11 @@
 <script>
 export default {
     name: "VariableItem",
-    props: ['name'],
+    props: {
+        name: String
+    },
     created() {
-        if (this.name) {
-            this.variable = this.name;
-        } else {
-            this.variable = "Введите название"
-        }
+        this.title = this.name
     },
     data() {
         return {
@@ -42,11 +41,11 @@ export default {
             this.$refs.input.focus();
             this.$refs.input.select()
         },
-        remove(){
-            this.$emit('remove')
+        addVariableInText() {
+            if (this.readonly) this.$emit('addInTask')
         },
-        addVariableInText(){
-            if(this.readonly) this.$emit('addInTask')
+        changeVariableName(){
+            this.$emit('change', this.title, this.name)
         }
     }
 }
@@ -68,17 +67,17 @@ export default {
         font-size: 16px;
     }
 
-    &_functions{
-        &_icon{
-            img{
+    &_functions {
+        &_icon {
+            img {
                 width: 20px;
                 height: 20px;
             }
         }
     }
 
-    .remove{
-        img{
+    .remove {
+        img {
             width: 15px;
         }
     }

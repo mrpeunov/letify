@@ -23,6 +23,7 @@ export default {
     font-weight: 700;
     cursor: pointer;
     transition: 0.2s;
+    user-select: none;
 
     &:hover{
         background: white;

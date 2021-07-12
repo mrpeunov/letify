@@ -10,11 +10,13 @@
                     class="variables"
                     :variables="variables"
                     @addInTask="addInTask"
-                    @addNewVariable="addNewVariable"/>
+                    @removeVariable="removeVariable"
+                    @changeVariable="changeVariable"
+                />
 
                 <add-variable
                     class="add-btn"
-                    @add="addNewVariable" />
+                    @add="addNewVariable"/>
 
                 <work-space class="workspace" ref="child"/>
 
@@ -49,45 +51,22 @@ export default {
     },
     data() {
         return {
+            created: true,
             title: '',
             content: '',
             grade: '',
-            variants: [
-                {
-                    "number": 1,
-                    "answer": "18",
-                    "variables": [
-                        {
-                            "variable": "a",
-                            "value": "24"
-                        },
-                        {
-                            "variable": "b",
-                            "value": "6"
-                        }
-                    ]
-                },
-                {
-                    "variables": [
-                        {
-                            "variable": "a",
-                            "value": "36"
-                        },
-                        {
-                            "variable": "b",
-                            "value": "6"
-                        }
-                    ],
-                    "number": 2,
-                    "answer": "30"
-                }],
+            variants: [{
+                variables: [],
+                number: 1,
+                answer: ''
+            }]
         }
     },
     computed: {
         variables() {
             const variablesList = []
 
-            if (!this.variants) return variablesList;
+            if (this.variants.length === 0) return variablesList;
 
             const firstElemVariables = this.variants[0].variables;
 
@@ -105,14 +84,42 @@ export default {
         test() {
             console.log(this.variants)
         },
-        addNewVariable(variable) {
+        addNewVariable() {
+            let newVariable = "variable" + this.variants[0].variables.length;
+
+            //если переменная с таким именем существует добавляем в конец единичку
+            while (this.variables.indexOf(newVariable) !== -1) {
+                newVariable += "1"
+            }
+
             for (let i = 0; i < this.variants.length; i++) {
                 this.variants[i].variables.push({
-                    "variable": variable,
+                    "variable": newVariable,
                     "value": ''
                 })
             }
         },
+        changeVariable(newVariable, oldVariable) {
+            while (this.variables.indexOf(newVariable) !== -1) {
+                newVariable += "1"
+            }
+
+            for (let i = 0; i < this.variants.length; i++) {
+                const variables = this.variants[i].variables;
+
+                for (let j = 0; j < variables.length; j++) {
+                    if (variables[j].variable === oldVariable) {
+                        variables[j].variable = newVariable;
+                    }
+                }
+            }
+        },
+        removeVariable(variable) {
+            for (let i = 0; i < this.variants.length; i++) {
+                this.variants[i].variables = this.variants[i].variables.filter(item => item.variable !== variable)
+            }
+        },
+
         addNewVariant() {
             const variant = {
                 number: this.variants.length + 1,
@@ -120,25 +127,24 @@ export default {
                 variables: []
             }
 
-            for (let item in this.variables){
+            for (let i = 0; i < this.variables.length; i++) {
                 variant.variables.push({
-                    variable: item,
+                    variable: this.variables[i],
                     value: ""
                 })
             }
 
             this.variants.push(variant)
         },
+        removeVariant(number) {
+            if (this.variants.length === 0) return;
 
-        removeVariant(number){
-            if(this.variants.length === 0) return;
-
-            if(this.variants.length === 1){
+            if (this.variants.length === 1) {
                 const variant = this.variants[0];
 
                 variant.answer = "";
 
-                for(let i = 0; i < variant.variables.length; i++){
+                for (let i = 0; i < variant.variables.length; i++) {
                     variant.variables[i].value = "";
                 }
                 console.log(variant)
@@ -162,7 +168,7 @@ export default {
     display: grid;
     grid-template-areas: "variables workspace" "add-btn workspace";
     grid-template-columns: 300px 1fr;
-    grid-template-rows: 50vh 50px;
+    grid-template-rows: max(50vh, 380px) 50px;
     row-gap: 20px;
     column-gap: 50px;
     margin-bottom: 50px;
@@ -175,7 +181,7 @@ export default {
     border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-.add-btn{
+.add-btn {
     grid-area: add-btn;
 }
 

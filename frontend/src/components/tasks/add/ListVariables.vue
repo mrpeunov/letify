@@ -6,12 +6,19 @@
         </div>
         <div class="items">
             <item-variable
-                v-for="(variable, index) in paginatedVariables"
+                v-for="variable in paginatedVariables"
                 :key="variable"
                 :name="variable"
-                @remove="remove(index)"
+                @remove="removeVariable(variable)"
+                @change="changeVariable"
                 @addInTask="addInTask(variable)"
                 class="variable"/>
+            <template v-if="!variables.length">
+                <div class="empty">
+                    Переменных не создано
+                </div>
+
+            </template>
         </div>
         <div class="next" @click="goDown" :class="{none: viewLast}">
             <img src="@/assets/img/arrow-down.svg">
@@ -39,9 +46,10 @@ export default {
         }
     },
     created() {
-        this.calculateMaxViewElements();
+
     },
     mounted() {
+        this.calculateMaxViewElements();
         window.addEventListener("resize", this.calculateMaxViewElements);
     },
     beforeUnmount() {
@@ -59,33 +67,29 @@ export default {
         }
     },
     methods: {
-        remove(index) {
-            //this.variables.splice(index, 1);
-            //console.log(this.variables)
-        },
         addInTask(variable) {
-            //console.log(variable)
-            //this.$emit('addInTask', variable)
-        },
-        addVariable() {
-            console.log("здесь")
-            let variable = "name";
-            this.$emit('addNewVariable', variable)
-            //this.variables.push("")
+            this.$emit('addInTask', variable)
         },
         goDown() {
-            this.startIndex += 1;
+            if (!this.viewLast) this.startIndex += 1;
         },
         goUp() {
-            this.startIndex -= 1;
+            if (!this.viewFirst) this.startIndex -= 1;
         },
         calculateMaxViewElements() {
             if (!this.$refs.wrap) {
                 return;
             }
 
-            this.maxViewElements = (this.$refs.wrap.clientHeight - 60) / 80;
-            console.log(this.maxViewElements)
+            this.maxViewElements = (this.$refs.wrap.clientHeight - 60) / 70;
+        },
+        removeVariable(variable) {
+            this.$emit('removeVariable', variable);
+            this.goUp();
+        },
+        changeVariable(newVariable, oldVariable) {
+            if (newVariable === oldVariable) return;
+            this.$emit('changeVariable', newVariable, oldVariable)
         }
     }
 }
@@ -94,6 +98,10 @@ export default {
 <style scoped>
 .none {
     display: none;
+}
+
+.empty{
+    text-align: center;
 }
 
 .main {
