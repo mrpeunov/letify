@@ -25,22 +25,22 @@ export default {
     components: {
         VariableItem
     },
-    data() {
-        return {
-            variables: ["count1", "count2"]
-        }
+    props:{
+        variables: Array
     },
     methods: {
         remove(index){
-            this.variables.splice(index, 1);
-            console.log(this.variables)
+            //this.variables.splice(index, 1);
+            //console.log(this.variables)
         },
         addInTask(variable){
-            console.log(variable)
-            this.$emit('addInTask', variable)
+            //console.log(variable)
+            //this.$emit('addInTask', variable)
         },
         addVariable(){
-            this.variables.push("")
+            let variable = "name";
+            this.$emit('addNewVariable', variable)
+            //this.variables.push("")
         }
     }
 }
