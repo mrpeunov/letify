@@ -81,7 +81,7 @@ export default {
                 return;
             }
 
-            this.maxViewElements = (this.$refs.wrap.clientHeight - 60) / 70;
+            this.maxViewElements = (this.$refs.wrap.clientHeight - 60) / 80;
         },
         removeVariable(variable) {
             this.$emit('removeVariable', variable);

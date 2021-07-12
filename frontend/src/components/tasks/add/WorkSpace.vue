@@ -1,19 +1,25 @@
 <template>
     <div class="workspace">
-        <textarea v-model="text" ></textarea>
+        <textarea v-model="text"></textarea>
     </div>
 </template>
 
 <script>
 export default {
     name: "WorkSpace",
-    data(){
+    data() {
         return {
-            text: "Тут текст"
+            text: this.content
+        }
+    },
+    props: ['content'],
+    watch: {
+        text: function (newValue) {
+            this.$emit('changeText', newValue);
         }
     },
     methods: {
-        addInText(variable){
+        addInText(variable) {
             this.text += "[[" + variable + "]]"
         }
     }
@@ -21,8 +27,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.workspace{
-    textarea{
+.workspace {
+    textarea {
         width: 100%;
         height: 100%;
         border-radius: 10px;
