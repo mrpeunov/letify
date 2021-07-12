@@ -3,15 +3,25 @@
         <header-menu page-name="main"></header-menu>
         <div class="container">
             <h1 class="standard_h1">Создать задачу</h1>
+
             <div class="add">
+
                 <variables-block
                     class="variables"
                     :variables="variables"
-                    @addInTask="addInTask">
-                </variables-block>
-                <work-space class="workspace" ref="child"></work-space>
+                    @addInTask="addInTask"
+                    @addNewVariable="addNewVariable"/>
+
+                <work-space class="workspace" ref="child"/>
+
             </div>
-            <table-component :columns="variables" :rows="variants"></table-component>
+
+            <table-component
+                :columns="variables"
+                :rows="variants"
+                @removeVariant="removeVariant"
+                @addNewVariant="addNewVariant"/>
+
         </div>
     </div>
 
@@ -89,14 +99,54 @@ export default {
         test() {
             console.log(this.variants)
         },
-        addNewVariable(variable){
+        addNewVariable(variable) {
             for (let i = 0; i < this.variants.length; i++) {
                 this.variants[i].variables.push({
                     "variable": variable,
                     "value": ''
                 })
             }
-        }
+        },
+        addNewVariant() {
+            const variant = {
+                number: this.variants.length + 1,
+                answer: "",
+                variables: []
+            }
+
+            for (let item in this.variables){
+                variant.variables.push({
+                    variable: item,
+                    value: ""
+                })
+            }
+
+            this.variants.push(variant)
+        },
+
+        removeVariant(number){
+            if(this.variants.length === 0) return;
+
+            if(this.variants.length === 1){
+                const variant = this.variants[0];
+
+                variant.answer = "";
+
+                for(let i = 0; i < variant.variables.length; i++){
+                    variant.variables[i].value = "";
+                }
+                console.log(variant)
+                return;
+            }
+
+            //если два и более варианта, то удаляем
+            this.variants = this.variants.filter(item => item.number !== number)
+
+            //проставим варианты с первого
+            for (let i = 0; i < this.variants.length; i++) {
+                this.variants[i].number = i + 1;
+            }
+        },
     },
 }
 </script>

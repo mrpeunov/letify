@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main">
         <table>
             <thead>
             <tr>
@@ -11,12 +11,26 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="row in rows" :key="row.number">
-                <td> {{row.number}} </td>
-                <td v-for="column in row.variables" :key="column.variable">
-                    <input type="text" v-model="column.value">
+            <template v-if="rows">
+                <tr v-for="row in rows" :key="row.number">
+                    <td> {{ row.number }}</td>
+                    <td v-for="column in row.variables" :key="column.variable">
+                        <input type="text" v-model="column.value">
+                    </td>
+                    <td class="answer">
+                        <input type="text" v-model="row.answer">
+                        <img src="@/assets/img/basket.svg" alt="" @click="$emit('removeVariant', row.number)">
+                    </td>
+                </tr>
+
+            </template>
+            <tr>
+                <td colspan="100%">
+                    <div class="add_variant"
+                         @click="$emit('addNewVariant')">
+                        <span>+</span>Добавить вариант
+                    </div>
                 </td>
-                <td><input type="text" v-model="row.answer"></td>
             </tr>
             </tbody>
         </table>
@@ -30,11 +44,50 @@ export default {
     props: {
         columns: Array,
         rows: Array
-    }
+    },
+
+    methods: {
+        add() {
+            this.$emit.addNewVariant();
+        }
+    },
+
 }
 </script>
 
 <style lang="less" scoped>
+
+.main {
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.add_variant {
+    color: #9F9E9E;
+    line-height: 1;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    span {
+        font-size: 30px;
+        font-weight: lighter;
+        margin-right: 10px;
+    }
+}
+
+.answer {
+    position: relative;
+
+    img {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 15px;
+        cursor: pointer;
+    }
+}
 
 table {
     border-collapse: separate;

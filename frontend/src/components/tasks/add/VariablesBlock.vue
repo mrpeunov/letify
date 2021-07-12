@@ -38,6 +38,7 @@ export default {
             //this.$emit('addInTask', variable)
         },
         addVariable(){
+            console.log("здесь")
             let variable = "name";
             this.$emit('addNewVariable', variable)
             //this.variables.push("")
