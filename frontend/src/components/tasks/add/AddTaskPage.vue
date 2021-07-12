@@ -4,13 +4,17 @@
         <div class="container">
             <h1 class="standard_h1">Создать задачу</h1>
 
-            <div class="add">
+            <div class="wrap">
 
-                <variables-block
+                <list-variables
                     class="variables"
                     :variables="variables"
                     @addInTask="addInTask"
                     @addNewVariable="addNewVariable"/>
+
+                <add-variable
+                    class="add-btn"
+                    @add="addNewVariable" />
 
                 <work-space class="workspace" ref="child"/>
 
@@ -29,16 +33,18 @@
 
 <script>
 import HeaderMenu from "@/components/blocks/HeaderMenu";
-import VariablesBlock from "@/components/tasks/add/VariablesBlock";
+import ListVariables from "@/components/tasks/add/ListVariables";
+import AddVariable from "@/components/tasks/add/AddVariable";
 import WorkSpace from "@/components/tasks/add/WorkSpace";
 import TableComponent from "@/components/tasks/main/TableComponent";
 
 export default {
     name: "AddTaskPage",
     components: {
+        AddVariable,
         WorkSpace,
         HeaderMenu,
-        VariablesBlock,
+        ListVariables,
         TableComponent
     },
     data() {
@@ -152,13 +158,13 @@ export default {
 </script>
 
 <style scoped>
-.add {
+.wrap {
     display: grid;
-    grid-template-areas: "variables workspace";
+    grid-template-areas: "variables workspace" "add-btn workspace";
     grid-template-columns: 300px 1fr;
-    grid-template-rows: 50vh;
-    row-gap: 30px;
-    column-gap: 30px;
+    grid-template-rows: 50vh 50px;
+    row-gap: 20px;
+    column-gap: 50px;
     margin-bottom: 50px;
 }
 
@@ -167,6 +173,10 @@ export default {
     background: #E2E2E2;
     border-radius: 20px;
     border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.add-btn{
+    grid-area: add-btn;
 }
 
 .workspace {

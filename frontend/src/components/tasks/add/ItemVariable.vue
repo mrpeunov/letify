@@ -55,6 +55,7 @@ export default {
 <style lang="less" scoped>
 .variable {
     display: flex;
+    height: 50px;
 
     input {
         border: none;
