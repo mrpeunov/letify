@@ -13,6 +13,36 @@ export const getCategoriesWithTasks = (callback) => {
     })
 }
 
+export const getTaskForEdit = (task_id, callback) => {
+    const request = {
+        method: 'get',
+        url: `/api/v1/task/${task_id}/`,
+    }
+
+    axios(request).then((response) => {
+        callback(response.data);
+    })
+}
+
+
+export const sendUpdatedTask = (title, content, grade, category, variants, id, callback) => {
+    const request = {
+        method: 'patch',
+        url: `/api/v1/task/${id}/`,
+        data: {
+            title: title,
+            content: content,
+            grade: grade,
+            category: category,
+            variants: variants,
+        }
+    }
+
+    axios(request).then((response) => {
+        callback(response);
+    })
+}
+
 export const sendCreatedTask = (title, content, grade, category, variants, callback) => {
     const request = {
         method: 'post',

@@ -37,7 +37,10 @@ export default {
     },
     methods: {
         change(){
-            console.log("Изменить");
+            this.$router.push({
+                name: 'task-edit',
+                params: {edit: true, id: this.id}
+            })
         },
         delete(){
             removeTask(this.id, this.deleted)
@@ -48,7 +51,6 @@ export default {
         openTask(){
             console.log("Открыть таск")
         },
-
 
     }
 }

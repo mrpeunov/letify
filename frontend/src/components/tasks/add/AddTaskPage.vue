@@ -16,7 +16,9 @@
                     class="add-btn"
                     @add="addNewVariable"/>
 
-                <work-space class="workspace" :content="content" @changeText="updateText" ref="child"/>
+                <div class="workspace" >
+                    <textarea v-model="content"></textarea>
+                </div>
             </div>
 
             <h2 class="standard_h2"><span class="elem2">2</span>Составьте варианты задачи</h2>
@@ -45,7 +47,14 @@
                 </div>
             </div>
             <h2 class="standard_h2"><span class="elem4">4</span>Завершите создание</h2>
-            <div class="create-btn" @click="createTask">Создать задачу</div>
+            <div
+                v-if="edit"
+                class="create-btn"
+                @click="updateTask">Редактировать задачу</div>
+            <div
+                v-else
+                class="create-btn"
+                @click="createTask"> Создать задачу</div>
         </div>
     </div>
 
@@ -55,18 +64,24 @@
 import HeaderMenu from "@/components/blocks/HeaderMenu";
 import ListVariables from "@/components/tasks/add/ListVariables";
 import AddVariable from "@/components/tasks/add/AddVariable";
-import WorkSpace from "@/components/tasks/add/WorkSpace";
 import TableComponent from "@/components/tasks/add/TableComponent";
-import {sendCreatedTask} from "@/services/tasks_api";
+import {getTaskForEdit, sendCreatedTask, sendUpdatedTask} from "@/services/tasks_api";
 
 export default {
     name: "AddTaskPage",
     components: {
         AddVariable,
-        WorkSpace,
         HeaderMenu,
         ListVariables,
         TableComponent
+    },
+    props:{
+        category: String,
+        edit: {
+            type: Boolean,
+            default: false
+        },
+        id: Number
     },
     data() {
         return {
@@ -82,8 +97,11 @@ export default {
             grades: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
     },
-    props:{
-        category: String
+    created() {
+        console.log(this.id)
+        if(this.edit){
+            getTaskForEdit(this.id, this.setDataForEdit)
+        }
     },
     computed: {
         variables() {
@@ -101,9 +119,18 @@ export default {
         }
     },
     methods: {
-        addInTask(variable) {
-            this.$refs.child.addInText(variable)
+        setDataForEdit(data){
+            this.title = data.title;
+            this.content = data.content;
+            if(data.variants.length) this.variants = data.variants;
+            this.grade = data.grade;
+            console.log(data)
+            console.log(this)
         },
+        addInTask(variable) {
+            this.content += "[[" + variable + "]]"
+        },
+
         addNewVariable() {
             let newVariable = "variable" + this.variants[0].variables.length;
 
@@ -179,10 +206,6 @@ export default {
                 this.variants[i].number = i + 1;
             }
         },
-        updateText(text) {
-            this.content = text;
-        },
-
         createTask(){
             sendCreatedTask(
                 this.title,
@@ -195,6 +218,22 @@ export default {
         },
         taskCreated(data){
             if(data.status === 201) this.$router.push({name: 'tasks'})
+        },
+        updateTask(){
+            sendUpdatedTask(
+                this.title,
+                this.content,
+                this.grade,
+                this.category,
+                this.variants,
+                this.id,
+                this.updatedTask
+            )
+        },
+        //далее нарушен DRY - исправить
+        updatedTask(data){
+            console.log(data.status)
+            if(data.status === 200) this.$router.push({name: 'tasks'})
         }
     },
 }
@@ -295,6 +334,17 @@ export default {
 
 .workspace {
     grid-area: workspace;
+
+    textarea {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        resize: none;
+        outline: none;
+        padding: 15px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
 }
 
 h2 {

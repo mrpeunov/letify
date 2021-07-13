@@ -45,6 +45,12 @@ const routes = [
         name: 'task-add',
         component: AddTaskPage,
         props: true
+    },
+    {
+        path: '/tasks/edit/:id',
+        name: 'task-edit',
+        component: AddTaskPage,
+        props: true
     }
 ]
 

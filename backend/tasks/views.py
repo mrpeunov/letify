@@ -48,7 +48,7 @@ class TaskViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        task, created = get_object_or_404(Task, id=pk, creator=request.user)
+        task = Task.objects.get(id=pk, creator=request.user)
         serializer = DetailTaskSerializer(task)
         return Response(serializer.data)
 
