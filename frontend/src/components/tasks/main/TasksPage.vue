@@ -12,6 +12,7 @@
                     :key="category.title" @updatedTasks="updatedTasks()">
                 </category-block>
             </div>
+            <add-category @addCategory="addCategory" />
         </div>
     </div>
 </template>
@@ -19,20 +20,21 @@
 <script>
 import HeaderMenu from "@/components/blocks/HeaderMenu";
 import CategoryBlock from "@/components/tasks/main/CategoryBlock";
-import {getCategoriesWithTasks} from "@/services/tasks_api";
+import AddCategory from "@/components/tasks/main/AddCategory";
+import {getCategoriesWithTasks, sendNewCategory} from "@/services/tasks_api";
 
 export default {
     name: "TasksPage",
     components: {
         HeaderMenu,
-        CategoryBlock
+        CategoryBlock,
+        AddCategory
     },
     created() {
         this.updatedTasks()
     },
     data() {
         return {
-            title: 'Категория стандарт',
             categories: []
         }
     },
@@ -42,12 +44,18 @@ export default {
         },
         updatedTasks(){
             getCategoriesWithTasks(this.setCategories)
+        },
+        addCategory(){
+            sendNewCategory('Новая категория', this.addedCategory)
+        },
+        addedCategory(data){
+            this.updatedTasks()
         }
     }
 
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 
 </style>

@@ -10,6 +10,14 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class AddCategorySerializer(serializers.ModelSerializer):
+    """Сериалайзер для категории"""
+
+    class Meta:
+        model = Category
+        fields = ('title', )
+
+
 class VariableSerializer(serializers.ModelSerializer):
     """Сериалайзер для переменной"""
 

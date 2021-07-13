@@ -56,7 +56,7 @@ import HeaderMenu from "@/components/blocks/HeaderMenu";
 import ListVariables from "@/components/tasks/add/ListVariables";
 import AddVariable from "@/components/tasks/add/AddVariable";
 import WorkSpace from "@/components/tasks/add/WorkSpace";
-import TableComponent from "@/components/tasks/main/TableComponent";
+import TableComponent from "@/components/tasks/add/TableComponent";
 import {sendCreatedTask} from "@/services/tasks_api";
 
 export default {

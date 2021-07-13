@@ -55,7 +55,34 @@ body {
 .standard {
     &_h1 {
         font-size: 20px;
+    }
 
+    &_header {
+        width: 100%;
+        box-sizing: border-box;
+        background: white;
+        border-radius: 15px;
+        padding: 10px 10px 10px 35px;
+        color: #71A6FD;
+        font-weight: bold;
+        font-size: 20px;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+        outline: none;
+        border: none;
+
+        &:after {
+            content: "";
+            background: #71A6FD;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 25px;
+            height: 100%;
+            border-radius: 15px 0 0 15px;
+        }
     }
 }
 

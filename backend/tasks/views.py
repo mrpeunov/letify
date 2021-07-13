@@ -4,7 +4,23 @@ from rest_framework import generics, permissions, viewsets
 from django.shortcuts import get_object_or_404
 
 from .models import Task, Variant, Variable, Category
-from .serializer import CreateUpdateTaskSerializer, PreviewTaskSerializer, DetailTaskSerializer, CategorySerializer
+from .serializer import CreateUpdateTaskSerializer, PreviewTaskSerializer, DetailTaskSerializer, \
+    CategorySerializer,AddCategorySerializer
+
+
+class CategoryViewSet(viewsets.ViewSet):
+
+    def create(self, request):
+        category = AddCategorySerializer(data=request.data)
+        print(request.data)
+        if category.is_valid():
+            category.save(creator=request.user)
+            return Response({"status": 201})
+        else:
+            return Response({"status": 400})
+
+    def partial_update(self):
+        pass
 
 
 class TaskViewSet(viewsets.ViewSet):

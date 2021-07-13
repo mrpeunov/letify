@@ -1,9 +1,7 @@
 <template>
     <div class="category" :class="{active: isOpen}">
 
-        <div class="category_header" @click="toggleCategory">
-            {{ title }}
-        </div>
+        <input class="category_header standard_header" v-model="componentTitle" @click="toggleCategory">
         <div class="category_items">
             <task-block v-for="task in tasks" :key="task.id" v-bind="task" @updatedTasks="$emit('updatedTasks')"/>
             <div class="add_task" @click="addTask">
@@ -32,16 +30,17 @@ export default {
         return {
             isOpen: true,
             isActive: true,
+            componentTitle: this.title
         }
     },
     methods: {
         toggleCategory() {
             this.isOpen = !this.isOpen;
         },
-        addTask(){
+        addTask() {
             this.$router.push({
                 name: 'task-add',
-                params: { category: this.id }
+                params: {category: this.id}
             })
         },
     }
@@ -55,30 +54,6 @@ export default {
     margin: 30px 0;
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 15px;
-
-    &_header {
-        background: white;
-        border-radius: 15px;
-        padding: 10px 10px 10px 35px;
-        color: #71A6FD;
-        font-weight: bold;
-        font-size: 20px;
-        position: relative;
-        cursor: pointer;
-        user-select: none;
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
-
-        &:after {
-            content: "";
-            background: #71A6FD;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 25px;
-            height: 100%;
-            border-radius: 15px 0 0 15px;
-        }
-    }
 
     &.active {
         .category_items {
@@ -95,15 +70,15 @@ export default {
     }
 }
 
-.add_task{
+.add_task {
     background: linear-gradient(266.75deg, #FFC54C -58.51%, #FF7FD5 53.28%);
     border-radius: 15px;
 
-    &:hover{
+    &:hover {
         background: linear-gradient(266.55deg, #FF7FD5 20.33%, #FFC54C 124.15%);
     }
 
-    &_blur{
+    &_blur {
         height: 100%;
         background: rgba(255, 255, 255, 0.5);
         backdrop-filter: blur(4px);
@@ -112,9 +87,10 @@ export default {
         justify-content: center;
         align-items: center;
         box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.25);
+        min-height: 150px;
     }
 
-    &_plus{
+    &_plus {
         font-size: 50px;
         border-radius: 50%;
         border: 3px solid black;

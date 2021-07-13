@@ -41,3 +41,17 @@ export const removeTask = (taskId, callback) => {
         callback(response.data)
     })
 }
+
+export const sendNewCategory = (title, callback) => {
+    const request = {
+        method: 'post',
+        url: 'api/v1/category/',
+        data: {
+            title: title
+        }
+    }
+
+    axios(request).then((response) => {
+        callback(response.data)
+    })
+}
