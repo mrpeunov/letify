@@ -2,6 +2,14 @@ from rest_framework import serializers
 from .models import Task, Variant, Variable, Category
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    """Сериалайзер для категории"""
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
 class VariableSerializer(serializers.ModelSerializer):
     """Сериалайзер для переменной"""
 
@@ -35,6 +43,7 @@ class CreateUpdateTaskSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         variants_data = validated_data.pop('variants')  # из данных объекта убираются варианты
+        print(validated_data)
         task = super(CreateUpdateTaskSerializer, self).create(validated_data)  # по данным создается задание
         self.update_variants_for_task(task, variants_data)  # для этого задания обновляются варианты
         return task
@@ -51,7 +60,7 @@ class CreateUpdateTaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ('title', 'grade', 'content', 'variants')
+        fields = ('title', 'grade', 'content', 'variants', 'category')
 
 
 class DetailTaskSerializer(serializers.ModelSerializer):

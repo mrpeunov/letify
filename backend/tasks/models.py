@@ -17,7 +17,8 @@ class Category(models.Model):
 class Task(models.Model):
     """Шаблон задания"""
     creator = models.ForeignKey(CustomUser, verbose_name="Создатель", on_delete=models.SET_NULL, null=True)
-    category = models.ForeignKey(Category, verbose_name="Категория", related_name='tasks', on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, verbose_name="Категория", related_name='tasks', on_delete=models.SET_NULL,
+                                 null=True)
     title = models.CharField("Название", max_length=128)
     content = models.TextField("Задача")
     grade = models.IntegerField("Максимальная оценка")

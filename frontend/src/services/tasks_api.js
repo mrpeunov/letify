@@ -12,3 +12,21 @@ export const getCategoriesWithTasks = (callback) => {
         callback(response.data);
     })
 }
+
+export const sendCreatedTask = (title, content, grade, category, variants, callback) => {
+    const request = {
+        method: 'post',
+        url: '/api/v1/task/',
+        data: {
+            title: title,
+            content: content,
+            grade: grade,
+            category: category,
+            variants: variants,
+        }
+    }
+
+    axios(request).then(function (response) {
+        callback(response.data);
+    })
+}

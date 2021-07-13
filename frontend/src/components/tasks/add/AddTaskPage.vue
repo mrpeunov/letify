@@ -44,10 +44,8 @@
                     </div>
                 </div>
             </div>
-
-
             <h2 class="standard_h2"><span class="elem4">4</span>Завершите создание</h2>
-            <div class="create-btn">Создать задачу</div>
+            <div class="create-btn" @click="createTask">Создать задачу</div>
         </div>
     </div>
 
@@ -59,6 +57,7 @@ import ListVariables from "@/components/tasks/add/ListVariables";
 import AddVariable from "@/components/tasks/add/AddVariable";
 import WorkSpace from "@/components/tasks/add/WorkSpace";
 import TableComponent from "@/components/tasks/main/TableComponent";
+import {sendCreatedTask} from "@/services/tasks_api";
 
 export default {
     name: "AddTaskPage",
@@ -83,6 +82,9 @@ export default {
             grades: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
     },
+    props:{
+        category: String
+    },
     computed: {
         variables() {
             const variablesList = []
@@ -101,9 +103,6 @@ export default {
     methods: {
         addInTask(variable) {
             this.$refs.child.addInText(variable)
-        },
-        test() {
-            console.log(this.variants)
         },
         addNewVariable() {
             let newVariable = "variable" + this.variants[0].variables.length;
@@ -182,7 +181,20 @@ export default {
         },
         updateText(text) {
             this.content = text;
-            console.log(this.content)
+        },
+
+        createTask(){
+            sendCreatedTask(
+                this.title,
+                this.content,
+                this.grade,
+                this.category,
+                this.variants,
+                this.taskCreated
+            )
+        },
+        taskCreated(data){
+            if(data.status === 201) this.$router.push({name: 'tasks'})
         }
     },
 }

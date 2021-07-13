@@ -8,6 +8,7 @@ import UserPage from "@/components/user/UserPage";
 import AddTaskPage from "@/components/tasks/add/AddTaskPage";
 
 
+
 const routes = [
     {
         path: '/',
@@ -40,9 +41,10 @@ const routes = [
         component: UserPage
     },
     {
-        path: '/tasks/add/',
+        path: '/tasks/add/:category',
         name: 'task-add',
-        component: AddTaskPage
+        component: AddTaskPage,
+        props: true
     }
 ]
 

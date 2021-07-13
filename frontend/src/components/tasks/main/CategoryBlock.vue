@@ -28,9 +28,6 @@ export default {
         title: String,
         tasks: Array
     },
-    created() {
-        console.log(this.title, this.tasks)
-    },
     data() {
         return {
             isOpen: true,
