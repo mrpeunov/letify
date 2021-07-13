@@ -33,3 +33,8 @@ const addTokenInLocalStorage = (token) => {
     axios.defaults.headers.common['Authorization'] = 'Token ' + token;
 }
 
+export const exitFromSystem = (callback) => {
+    localStorage.removeItem('auth_token');
+    callback()
+}
+

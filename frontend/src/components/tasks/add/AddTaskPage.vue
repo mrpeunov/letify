@@ -233,7 +233,7 @@ export default {
         //далее нарушен DRY - исправить
         updatedTask(data){
             console.log(data.status)
-            if(data.status === 200) this.$router.push({name: 'tasks'})
+            if(data.status === 200) this.$router.push({name: 'MainPage'})
         }
     },
 }

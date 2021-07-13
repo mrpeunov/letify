@@ -54,6 +54,9 @@
 </template>
 
 <script>
+import {exitFromSystem} from "@/services/auth_api";
+import router from "@/router";
+
 export default {
     name: "HeaderMenu",
     props: ['pageName'],
@@ -83,7 +86,10 @@ export default {
             this.openMobileMenu = !this.openMobileMenu;
         },
         goOut() {
-            console.log("Вылетаем из системы")
+            exitFromSystem(this.exit)
+        },
+        exit(){
+            this.$router.push({name: 'login'})
         }
     }
 }
