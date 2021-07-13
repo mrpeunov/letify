@@ -5,22 +5,30 @@ from django.shortcuts import get_object_or_404
 
 from .models import Task, Variant, Variable, Category
 from .serializer import CreateUpdateTaskSerializer, PreviewTaskSerializer, DetailTaskSerializer, \
-    CategorySerializer,AddCategorySerializer
+    CategorySerializer, AddCategorySerializer
 
 
 class CategoryViewSet(viewsets.ViewSet):
 
     def create(self, request):
         category = AddCategorySerializer(data=request.data)
-        print(request.data)
         if category.is_valid():
             category.save(creator=request.user)
             return Response({"status": 201})
         else:
             return Response({"status": 400})
 
-    def partial_update(self):
-        pass
+    def partial_update(self, request, pk=None):
+        category = AddCategorySerializer(
+            Category.objects.get(id=pk),
+            data=request.data
+        )
+
+        if category.is_valid(raise_exception=True):
+            category.save()
+            return Response(status=200)
+        else:
+            return Response(status=400)
 
 
 class TaskViewSet(viewsets.ViewSet):
@@ -38,7 +46,6 @@ class TaskViewSet(viewsets.ViewSet):
         categories = Category.objects.filter(creator=request.user)
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
-
 
     def retrieve(self, request, pk=None):
         task, created = get_object_or_404(Task, id=pk, creator=request.user)

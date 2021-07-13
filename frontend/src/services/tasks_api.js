@@ -55,3 +55,17 @@ export const sendNewCategory = (title, callback) => {
         callback(response.data)
     })
 }
+
+export const changeNameCategory = (categoryId, newTitle, callback) => {
+    const request = {
+        method: 'patch',
+        url: `api/v1/category/${categoryId}/`,
+        data: {
+            title: newTitle
+        }
+    }
+
+    axios(request).then((response) => {
+        callback(response.data)
+    })
+}

@@ -12,7 +12,7 @@
                     :key="category.title" @updatedTasks="updatedTasks()">
                 </category-block>
             </div>
-            <add-category @addCategory="addCategory" />
+            <add-category @addCategory="addCategory" @changeNameCategory="updatedTasks()"/>
         </div>
     </div>
 </template>

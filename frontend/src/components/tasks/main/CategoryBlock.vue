@@ -1,7 +1,9 @@
 <template>
     <div class="category" :class="{active: isOpen}">
 
-        <input class="category_header standard_header" v-model="componentTitle" @click="toggleCategory">
+        <input class="category_header standard_header"
+               v-model="componentTitle"
+               @click="toggleCategory" @keyup.enter="changeName">
         <div class="category_items">
             <task-block v-for="task in tasks" :key="task.id" v-bind="task" @updatedTasks="$emit('updatedTasks')"/>
             <div class="add_task" @click="addTask">
@@ -15,6 +17,7 @@
 
 <script>
 import TaskBlock from "@/components/tasks/main/TaskBlock";
+import {changeNameCategory} from "@/services/tasks_api";
 
 export default {
     name: "CategoryBlock",
@@ -43,6 +46,13 @@ export default {
                 params: {category: this.id}
             })
         },
+        changeName(){
+            changeNameCategory(this.id, this.componentTitle, this.changedName);
+        },
+        changedName(){
+            console.log("ff")
+            this.$emit('changeNameCategory');
+        }
     }
 }
 </script>

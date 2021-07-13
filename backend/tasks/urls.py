@@ -24,5 +24,9 @@ urlpatterns = format_suffix_patterns([
 
     path("category/", CategoryViewSet.as_view(
         {'post': 'create'}
+    )),
+
+    path("category/<int:pk>/", CategoryViewSet.as_view(
+        {'patch': 'partial_update'}
     ))
 ])
