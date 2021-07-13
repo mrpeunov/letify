@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import {removeTask} from "@/services/tasks_api";
+
 export default {
     name: "TaskBlock",
     created() {
@@ -38,11 +40,16 @@ export default {
             console.log("Изменить");
         },
         delete(){
-            console.log("Удалить")
+            removeTask(this.id, this.deleted)
+        },
+        deleted(){
+            this.$emit('updatedTasks')
         },
         openTask(){
             console.log("Открыть таск")
-        }
+        },
+
+
     }
 }
 </script>
@@ -60,6 +67,10 @@ export default {
     box-shadow: 0 2px 9px rgba(0, 0, 0, 0.25);
     color: white;
     cursor: pointer;
+
+    &:hover{
+        background: linear-gradient(266.81deg, #71A6FD -49.33%, #FF2CDF 113.86%);;
+    }
 
     &_settings {
         position: absolute;

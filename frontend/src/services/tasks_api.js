@@ -8,7 +8,7 @@ export const getCategoriesWithTasks = (callback) => {
         url: '/api/v1/task/',
     }
     
-    axios(request).then(function (response) {
+    axios(request).then((response) => {
         callback(response.data);
     })
 }
@@ -26,7 +26,18 @@ export const sendCreatedTask = (title, content, grade, category, variants, callb
         }
     }
 
-    axios(request).then(function (response) {
+    axios(request).then((response) => {
         callback(response.data);
+    })
+}
+
+export const removeTask = (taskId, callback) => {
+    const request = {
+        method: 'delete',
+        url: `api/v1/task/${taskId}`,
+    }
+
+    axios(request).then((response) => {
+        callback(response.data)
     })
 }

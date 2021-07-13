@@ -9,7 +9,7 @@
                     :id="category.id"
                     :title="category.title"
                     :tasks="category.tasks"
-                    :key="category.title">
+                    :key="category.title" @updatedTasks="updatedTasks()">
                 </category-block>
             </div>
         </div>
@@ -28,7 +28,7 @@ export default {
         CategoryBlock
     },
     created() {
-        getCategoriesWithTasks(this.setCategories)
+        this.updatedTasks()
     },
     data() {
         return {
@@ -39,6 +39,9 @@ export default {
     methods: {
         setCategories(categories) {
             this.categories = categories;
+        },
+        updatedTasks(){
+            getCategoriesWithTasks(this.setCategories)
         }
     }
 

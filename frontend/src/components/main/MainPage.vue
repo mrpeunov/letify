@@ -2,22 +2,20 @@
     <div>
         <header-menu page-name="main"></header-menu>
         <div class="container">
-            ип
-            <statistics-block></statistics-block>
-            пи
+            <blank-temporarily/>
         </div>
     </div>
 </template>
 
 <script>
-import StatisticsBlock from "@/components/main/StatisticsBlock";
 import HeaderMenu from "@/components/blocks/HeaderMenu";
+import BlankTemporarily from "@/components/blocks/BlankTemporarily";
 
 export default {
     name: "MainPage",
     components: {
-        StatisticsBlock,
-        HeaderMenu
+        HeaderMenu,
+        BlankTemporarily
     }
 }
 </script>

@@ -5,7 +5,7 @@
             {{ title }}
         </div>
         <div class="category_items">
-            <task-block v-for="task in tasks" :key="task.id" v-bind="task"></task-block>
+            <task-block v-for="task in tasks" :key="task.id" v-bind="task" @updatedTasks="$emit('updatedTasks')"/>
             <div class="add_task" @click="addTask">
                 <div class="add_task_blur">
                     <div class="add_task_plus">+</div>
@@ -43,7 +43,7 @@ export default {
                 name: 'task-add',
                 params: { category: this.id }
             })
-        }
+        },
     }
 }
 </script>
@@ -100,7 +100,7 @@ export default {
     border-radius: 15px;
 
     &:hover{
-        background: linear-gradient(266.75deg, #FF7FD5 53.28%, #FFC54C -58.51%);
+        background: linear-gradient(266.55deg, #FF7FD5 20.33%, #FFC54C 124.15%);
     }
 
     &_blur{

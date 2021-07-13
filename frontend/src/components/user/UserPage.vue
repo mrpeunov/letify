@@ -2,7 +2,7 @@
     <div>
         <header-menu page-name="user"></header-menu>
         <div class="container">
-            страница юзера
+            <blank-temporarily/>
         </div>
     </div>
 </template>
@@ -10,11 +10,13 @@
 <script>
 
 import HeaderMenu from "@/components/blocks/HeaderMenu";
+import BlankTemporarily from "@/components/blocks/BlankTemporarily";
 
 export default {
     name: "UserPage",
     components: {
-        HeaderMenu
+        HeaderMenu,
+        BlankTemporarily
     }
 }
 </script>
