@@ -2,8 +2,8 @@ import axios from "axios";
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000/';
 
-export const loginInSystem = (loginOrEmail, password) => {
-    getToken(password, loginOrEmail);
+export const loginInSystem = (loginOrEmail, password, callback) => {
+    getToken(password, loginOrEmail, callback);
     /*
     * Логика такая:
     * 1. Получаем токен
@@ -13,7 +13,7 @@ export const loginInSystem = (loginOrEmail, password) => {
     * */
 }
 
-const getToken = (password, loginOrEmail) => {
+const getToken = (password, loginOrEmail, callback) => {
     const request = {
         method: 'post',
         url: '/auth/token/login/',
@@ -24,6 +24,7 @@ const getToken = (password, loginOrEmail) => {
     }
 
     axios(request).then(function (response) {
+        callback()
         addTokenInLocalStorage(response.data.auth_token)
     })
 }

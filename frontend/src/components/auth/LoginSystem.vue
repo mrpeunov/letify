@@ -39,7 +39,9 @@ export default {
     },
     methods: {
         login() {
-            loginInSystem(this.loginOrMail, this.password);
+            loginInSystem(this.loginOrMail, this.password, this.loginSuccess);
+        },
+        loginSuccess(){
             this.$router.push({name: "MainPage"})
         }
     }

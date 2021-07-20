@@ -8,6 +8,11 @@ from .serializer import CreateUpdateTaskSerializer, PreviewTaskSerializer, Detai
     CategorySerializer, AddCategorySerializer
 
 
+class TestView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
 class CategoryViewSet(viewsets.ViewSet):
 
     def create(self, request):
