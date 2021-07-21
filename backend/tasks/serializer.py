@@ -2,22 +2,6 @@ from rest_framework import serializers
 from .models import Task, Variant, Variable, Category
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    """Сериалайзер для категории"""
-
-    class Meta:
-        model = Category
-        fields = '__all__'
-
-
-class AddCategorySerializer(serializers.ModelSerializer):
-    """Сериалайзер для категории"""
-
-    class Meta:
-        model = Category
-        fields = ('title', )
-
-
 class VariableSerializer(serializers.ModelSerializer):
     """Сериалайзер для переменной"""
 
@@ -82,7 +66,7 @@ class DetailTaskSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class PreviewTaskSerializer(serializers.ModelSerializer):
+class SnippetTaskSerializer(serializers.ModelSerializer):
     """Сериалайзер для задачи без подробностей"""
     class Meta:
         model = Task
@@ -90,8 +74,14 @@ class PreviewTaskSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    tasks = PreviewTaskSerializer(many=True)
+    class Meta:
+        model = Category
+        fields = ('id', 'title', )
+
+
+class CategoryDetailSerializer(serializers.ModelSerializer):
+    tasks = SnippetTaskSerializer(many=True)
 
     class Meta:
         model = Category
-        fields = ('id', 'title', 'tasks')
+        fields = ('id', 'title', 'tasks', )
