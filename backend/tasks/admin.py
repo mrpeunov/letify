@@ -1,29 +1,30 @@
 from django.contrib import admin
-from .models import Task, Variant, Variable, Category
+from .models.base import Category, AbstractTask
+from tasks.models.default_test import DefaultTask, DefaultTaskVariant, VariableForDefaultTask
 
 
-class VariantInline(admin.TabularInline):
-    model = Variant
-    extra = 3
+# class VariantInline(admin.TabularInline):
+#     model = Variant
+#     extra = 3
+#
+#
+# class VariableInline(admin.TabularInline):
+#     model = Variable
+#     extra = 2
 
 
-class VariableInline(admin.TabularInline):
-    model = Variable
-    extra = 2
+@admin.register(VariableForDefaultTask)
+class VariableForDefaultTaskAdmin(admin.ModelAdmin):
+    pass
 
 
-@admin.register(Task)
-class TaskAdmin(admin.ModelAdmin):
-    inlines = [VariantInline]
+@admin.register(DefaultTaskVariant)
+class DefaultTaskVariantAdmin(admin.ModelAdmin):
+    pass
 
 
-@admin.register(Variant)
-class VariantAdmin(admin.ModelAdmin):
-    inlines = [VariableInline]
-
-
-@admin.register(Variable)
-class VariantVariableAdmin(admin.ModelAdmin):
+@admin.register(DefaultTask)
+class DefaultTaskAdmin(admin.ModelAdmin):
     pass
 
 
