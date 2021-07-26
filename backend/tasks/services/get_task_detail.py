@@ -7,9 +7,7 @@ def get_task_detail(pk):
     task = Task.objects.get(id=pk)
 
     # из конфига берем нужную модель контента
-    print(TaskTypesConfig, task.type)
-    content_model = TaskTypesConfig[task.type]
-    print(content_model)
+    content_model = TaskTypesConfig[task.type]["model"]
 
     # получаем эту модель
     task.content = content_model.objects.get(task=task)

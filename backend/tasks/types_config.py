@@ -11,4 +11,4 @@ TaskTypesConfig = \
             "model": DefaultTask,
             "serializer": DefaultTaskContentSerializer
         }
-    },
+    }
