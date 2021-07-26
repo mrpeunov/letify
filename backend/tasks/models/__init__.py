@@ -1,2 +1,2 @@
-from .base import Category, AbstractTask
-from .default_test import DefaultTask, DefaultTaskVariant, VariableForDefaultTask
+from .base_models import Category, Task, TaskContent
+from .default_models import DefaultTask, DefaultTaskVariant, VariableForDefaultTask

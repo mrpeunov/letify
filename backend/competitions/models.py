@@ -1,5 +1,5 @@
 from django.db import models
-from tasks.models.base import AbstractTask
+from tasks.models.base_models import Task
 from users.models import CustomUser
 
 
@@ -8,7 +8,7 @@ class Competition(models.Model):
     creator = models.ForeignKey(CustomUser, verbose_name="Создатель", on_delete=models.SET_NULL, null=True)
     start = models.DateTimeField("Начало", null=True)
     finish = models.DateTimeField("Конец", null=True)
-    tasks = models.ManyToManyField(AbstractTask)
+    tasks = models.ManyToManyField(Task)
 
     class Meta:
         verbose_name = "Соревнование"

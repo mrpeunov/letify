@@ -1,4 +1,4 @@
-from tasks.models.base import AbstractTask
+from tasks.models.base_models import AbstractTask
 
 
 class TestTask(AbstractTask):

@@ -1,8 +1,8 @@
 from django.db import models
-from tasks.models.base import AbstractTask
+from tasks.models.base_models import TaskContent
 
 
-class DefaultTask(AbstractTask):
+class DefaultTask(TaskContent):
     content = models.TextField("Контент задачи")
 
     def get_all_variants(self):

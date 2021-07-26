@@ -16,16 +16,13 @@ class Category(models.Model):
         verbose_name_plural = "Категории"
 
 
-class AbstractTask(models.Model):
+class Task(models.Model):
     """
-    Это абстрактный класс оболычка для задания
+    Класс в котором хранится основные характеристики задания
     Должен использоваться для поиска и управления задачей,
-    а не для самой задачи
-    Сама задача реализует абстрактные методы и хранит контент
+    а не для контента задачи
+    Контент реализуется через композицию
     """
-
-    class Meta:
-        abstract = True
 
     class Type(models.TextChoices):
         TEST = "T", "Test"
@@ -42,10 +39,23 @@ class AbstractTask(models.Model):
     updated_date = models.DateTimeField("Дата обновления", auto_now_add=True)
     type = models.CharField("Тип задачи", max_length=10, choices=Type.choices, default=Type.DEFAULT)
 
-    # тип задачи (с переменными, с тестами, с тестами с несколькими вариантами ответа)
+    def __str__(self):
+        return 'Задание {}'.format(self.title)
 
-    def get_task_content(self):
-        pass
+    class Meta:
+        verbose_name = "Задание"
+        verbose_name_plural = "Задания"
+
+
+class TaskContent(models.Model):
+    """
+    Абстрактный класс, насладедники которого определяют в каком формате хранится задание
+    """
+    task = models.OneToOneField(Task, on_delete=models.CASCADE)
+    text = models.TextField("Текст задачи")
+
+    class Meta:
+        abstract = True
 
     @abstractmethod
     def get_all_variants(self):
@@ -56,12 +66,5 @@ class AbstractTask(models.Model):
         pass
 
     @abstractmethod
-    def check_answer_correctness(self, answer):
+    def check_answer_correctness(self, variant, answer):
         pass
-
-    def __str__(self):
-        return 'Задание {}'.format(self.title)
-
-    class Meta:
-        verbose_name = "Задание"
-        verbose_name_plural = "Задания"
