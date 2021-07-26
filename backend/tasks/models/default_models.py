@@ -3,7 +3,6 @@ from tasks.models.base_models import TaskContent
 
 
 class DefaultTask(TaskContent):
-    content = models.TextField("Контент задачи")
 
     def get_all_variants(self):
         pass

@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from .models import Category
+from tasks.models import DefaultTask
+
+
+class DefaultTaskContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DefaultTask
+        fields = ('text', )
 
 
 # class VariableSerializer(serializers.ModelSerializer):
@@ -71,12 +77,6 @@ from .models import Category
 #     class Meta:
 #         model = Task
 #         fields = ('id', 'title', 'grade', 'withAnswer')
-
-
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ('id', 'title', )
 
 
 # class CategoryDetailSerializer(serializers.ModelSerializer):

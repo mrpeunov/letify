@@ -1,18 +1,17 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import generics, permissions, viewsets
-from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
 from rest_framework import permissions
-
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from .models import Category
-from .serializer import CategorySerializer
+from tasks.serializers import CategorySerializer, CategoryDetailSerializer, DetailTaskSerializer
+from .services.get_task_detail import get_task_detail
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, ]
 
     serializers = {
-        'detail': CategorySerializer,
+        'detail': CategoryDetailSerializer,
         'default': CategorySerializer
     }
 
@@ -25,6 +24,14 @@ class CategoryViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Category.objects.all()
         # return Category.objects.filter(creator=self.request.user)
+
+
+class TaskDetail(APIView):
+    """Получение полностью задания"""
+    def get(self, request, pk):
+        task = get_task_detail(pk)
+        serializer = DetailTaskSerializer(task)
+        return Response(serializer.data)
 
 
 # class TaskViewSet(viewsets.ModelViewSet):
@@ -59,10 +66,10 @@ class CategoryViewSet(viewsets.ModelViewSet):
     +удалить
     +обновить
 
-+задача полностью:
-    +создать
-    +удалить
-    +обновить
+-задача полностью:
+    -создать
+    -удалить
+    -обновить
     
 -список всех задач пользователя 
     - фильтрация

@@ -1,5 +1,4 @@
 from abc import abstractmethod
-
 from django.db import models
 from users.models import CustomUser
 
@@ -51,7 +50,7 @@ class TaskContent(models.Model):
     """
     Абстрактный класс, насладедники которого определяют в каком формате хранится задание
     """
-    task = models.OneToOneField(Task, on_delete=models.CASCADE)
+    task = models.OneToOneField(Task, verbose_name="content", on_delete=models.CASCADE)
     text = models.TextField("Текст задачи")
 
     class Meta:

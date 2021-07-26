@@ -1,6 +1,6 @@
 from django.test import TestCase
 from tasks.models import Category
-from tasks.serializer import CategorySerializer
+from tasks.serializers.main_serializers import CategorySerializer
 from users.models import CustomUser
 
 

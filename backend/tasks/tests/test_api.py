@@ -1,10 +1,9 @@
-from django.test import TestCase
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
 from tasks.models import Category
-from tasks.serializer import CategorySerializer
+from tasks.serializers.main_serializers import CategorySerializer
 from users.models import CustomUser
 
 
