@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models.base_models import Category, Task
-from tasks.models.default_models import DefaultTask, DefaultTaskVariant, VariableForDefaultTask
+from .models import TestTask, OptionForTestTask
+from .models import Category, Task
+from .models import DefaultTask, DefaultTaskVariant, VariableForDefaultTask
 
 
 # class VariantInline(admin.TabularInline):
@@ -25,6 +26,16 @@ class DefaultTaskVariantAdmin(admin.ModelAdmin):
 
 @admin.register(DefaultTask)
 class DefaultTaskAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(TestTask)
+class TestTaskTaskAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(OptionForTestTask)
+class OptionForTestTaskAdmin(admin.ModelAdmin):
     pass
 
 
