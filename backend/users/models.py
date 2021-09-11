@@ -9,3 +9,6 @@ class Group(models.Model):
 class CustomUser(AbstractUser):
     group = models.ForeignKey(Group, on_delete=models.PROTECT, blank=True, null=True)
     is_creator = models.BooleanField("Может ли создавать", default=False)
+
+    class Meta:
+        unique_together = ('email', )

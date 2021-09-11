@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 from users.models import CustomUser, Group
 
 
@@ -20,23 +21,22 @@ class StudentUserSerializer(serializers.ModelSerializer):
     Создание пользователя, который не может создавать задания
     """
     password = serializers.CharField(write_only=True)
-    group = serializers.CharField()
+    group = serializers.CharField(required=False)
 
     def create(self, validated_data):
-
-        # group_title = validated_data.pop['group']
-
         user = CustomUser.objects.create_user(
-            username=validated_data['username'],
-            password=validated_data['password'],
-            email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
+            username=validated_data.get('username'),
+            password=validated_data.get('password'),
+            email=validated_data.get('email'),
+            first_name=validated_data.get('first_name'),
+            last_name=validated_data.get('last_name'),
             is_creator=False
         )
-        # if group_title:
-        user.group, created = Group.objects.get_or_create(title=validated_data['group'])
-        user.save()
+
+        group_title = validated_data.get('group')
+        if group_title:
+            user.group, created = Group.objects.get_or_create(title=validated_data['group'])
+            user.save()
 
         return user
 
@@ -50,3 +50,7 @@ class StudentUserSerializer(serializers.ModelSerializer):
             "password",
             "group",
         )
+        extra_kwargs = {
+            'first_name': {'required': True},
+            'last_name': {'required': True},
+        }
