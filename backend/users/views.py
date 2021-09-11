@@ -2,13 +2,23 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 
-def login():
+def login(request):
     return HttpResponse("login", status=200)
 
 
-def logout():
+def logout(request):
     return HttpResponse("logout", status=200)
 
 
-def register():
+def register(request):
+    """
+    Приходит:
+     +username,
+     +email,
+     +password,
+     +firstname,
+     +lastname,
+     isCreator,
+     group,
+    """
     return HttpResponse("register", status=200)

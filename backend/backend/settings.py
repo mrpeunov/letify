@@ -19,8 +19,8 @@ INSTALLED_APPS = [
 
     # local apps
     'users',  # my app for users
-    'tasks',  # my app for tasks
-    'competitions',  # my app for competitions
+    # 'tasks',  # my app for tasks
+    # 'competitions',  # my app for competitions
 
     # append apps
     'rest_framework',
