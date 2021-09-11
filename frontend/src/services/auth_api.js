@@ -21,13 +21,14 @@ const getToken = (password, loginOrEmail, callback) => {
             username: loginOrEmail,
             password: password
         }
-    }
+    };
 
     axios(request).then(function (response) {
-        callback()
-        addTokenInLocalStorage(response.data.auth_token)
-    })
-}
+        console.log(response);
+        addTokenInLocalStorage(response.data.auth_token);
+        callback();
+    });
+};
 
 const addTokenInLocalStorage = (token) => {
     localStorage.setItem('auth_token', token);
@@ -36,6 +37,6 @@ const addTokenInLocalStorage = (token) => {
 
 export const exitFromSystem = (callback) => {
     localStorage.removeItem('auth_token');
-    callback()
+    callback();
 }
 
