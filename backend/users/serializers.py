@@ -3,6 +3,19 @@ from rest_framework.validators import UniqueTogetherValidator
 from users.models import CustomUser, Group
 
 
+# class CreateUserSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = CustomUser
+#         fields = ("login", "email", "password")
+#
+#     def create(self, validated_data):
+#         user = super(CreateUserSerializer, self).create(validated_data)
+#         user.set_password(validated_data['password'])
+#         user.save()
+#         return user
+
+
 class UserSerializer(serializers.ModelSerializer):
     """
     Создание пользователя
@@ -14,7 +27,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             "first_name", "last_name", "username", "email", "password", "is_creator"
         )
-
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True},
@@ -23,7 +35,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = super(UserSerializer, self).create(validated_data)
-        user.set_password(validated_data['password'])
+        user.set_password(validated_data.get('password'))
+        user.save()
         return user
 
 
