@@ -30,7 +30,7 @@ class LoginView(APIView):
     """
     Вход в систему
     """
-    permission_classes = permissions.AllowAny
+    permission_classes = (permissions.AllowAny, )
 
     def post(self, request):
         username = request.data.get("username")
@@ -57,14 +57,17 @@ class LoginView(APIView):
 
 
 class LogoutView(APIView):
-    permission_classes = permissions.IsAuthenticated
+    """
+    Выход из системы
+    """
+    permission_classes = (permissions.IsAuthenticated, )
 
     def post(self, request):
         try:
             token = Token.objects.get(user=request.user)
             token.delete()
             return Response(
-                {'test': 'success_delete'},
+                {'test': 'Success logout'},
                 status=status.HTTP_204_NO_CONTENT
             )
         except ObjectDoesNotExist:
