@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from rest_framework import permissions, status
+from rest_framework.authtoken.models import Token
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -29,7 +30,7 @@ class LoginView(APIView):
     """
     Вход в систему
     """
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = permissions.AllowAny
 
     def post(self, request):
         username = request.data.get("username")
@@ -55,11 +56,19 @@ class LoginView(APIView):
             )
 
 
-def logout(request):
-    return HttpResponse("logout", status=200)
+class LogoutView(APIView):
+    permission_classes = permissions.IsAuthenticated
 
-
-
-
-
-
+    def post(self, request):
+        try:
+            token = Token.objects.get(user=request.user)
+            token.delete()
+            return Response(
+                {'test': 'success_delete'},
+                status=status.HTTP_204_NO_CONTENT
+            )
+        except ObjectDoesNotExist:
+            return Response(
+                {'error': 'Object dot found'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
