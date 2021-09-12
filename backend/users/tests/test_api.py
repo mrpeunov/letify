@@ -14,26 +14,11 @@ class TestCreateStudentUser(APITestCase):
             "username": "test_user",
             "password": "qwerty123",
             "email": "test@test.ru",
-            "group": "123"
+            "is_creator": "false"
         }
         response = self.client.post(self.url, data)
 
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
-
-    def test_empty_group_student(self):
-        data = {
-            "first_name": "Test 1",
-            "last_name": "Test 2",
-            "username": "test_user",
-            "password": "qwerty123",
-            "email": "test2@test.ru",
-            "group": ""
-        }
-        response = self.client.post(self.url, data)
-        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
-
-        user = CustomUser.objects.get(username="test_user")
-        self.assertEqual(None, user.group)
 
     def test_exist_student(self):
         student_1 = {
@@ -42,7 +27,7 @@ class TestCreateStudentUser(APITestCase):
             "username": "test_user",
             "password": "qwerty123",
             "email": "test2@test.ru",
-            "group": "123"
+            "is_creator": "false"
         }
 
         self.client.post(self.url, student_1)
@@ -53,7 +38,7 @@ class TestCreateStudentUser(APITestCase):
             "username": "test_user",
             "password": "qwerty123",
             "email": "test2@test.ru",
-            "group": "123"
+            "is_creator": "false"
         }
 
         response = self.client.post(self.url, student_2)
@@ -67,7 +52,7 @@ class TestCreateStudentUser(APITestCase):
             "username": "test_user_1",
             "password": "qwerty123",
             "email": "test2@test.ru",
-            "group": "123"
+            "is_creator": "false"
         }
 
         self.client.post(self.url, student_1)
@@ -78,7 +63,7 @@ class TestCreateStudentUser(APITestCase):
             "username": "test_user_2",
             "password": "qwerty123",
             "email": "test2@test.ru",
-            "group": "123"
+            "is_creator": "false"
         }
 
         response = self.client.post(self.url, student_2)
@@ -92,7 +77,7 @@ class TestCreateStudentUser(APITestCase):
             "username": "test_user_1",
             "password": "qwerty123",
             "email": "test2@test.ru",
-            "group": "123"
+            "is_creator": "false"
         }
         response = self.client.post(self.url, student)
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
@@ -103,7 +88,7 @@ class TestCreateStudentUser(APITestCase):
             "username": "test_user_1",
             "password": "qwerty123",
             "email": "test2@test.ru",
-            "group": "123"
+            "is_creator": "false"
         }
         response = self.client.post(self.url, student)
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
@@ -114,7 +99,7 @@ class TestCreateStudentUser(APITestCase):
             "last_name": "Test",
             "password": "qwerty123",
             "email": "test2@test.ru",
-            "group": "123",
+            "is_creator": "false"
         }
         response = self.client.post(self.url, student)
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
@@ -125,7 +110,7 @@ class TestCreateStudentUser(APITestCase):
             "last_name": "Test",
             "username": "test_user_1",
             "email": "test2@test.ru",
-            "group": "123",
+            "is_creator": "false"
         }
         response = self.client.post(self.url, student)
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
